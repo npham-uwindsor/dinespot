@@ -7,10 +7,10 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
-require_login($assetPrefix . 'client/login.php');
+require_login(client_path('login.php'));
 
 $userId = (int) current_user_id();
-$defaultRedirect = $assetPrefix . 'client/reservations.php';
+$defaultRedirect = client_path('reservations.php');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . $defaultRedirect);

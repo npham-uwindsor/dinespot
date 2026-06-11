@@ -7,7 +7,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
-require_login($assetPrefix . 'client/login.php');
+require_login(client_path('login.php'));
 
 $restaurantId = (int) ($_GET['restaurant_id'] ?? $_POST['restaurant_id'] ?? 0);
 $redirect = $_GET['redirect'] ?? $_POST['redirect'] ?? ($assetPrefix . 'restaurants/index.php');

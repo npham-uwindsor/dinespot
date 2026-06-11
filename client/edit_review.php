@@ -8,7 +8,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
-require_login($assetPrefix . 'client/login.php');
+require_login(client_path('login.php'));
 
 $reviewId = (int) ($_GET['id'] ?? $_POST['id'] ?? 0);
 $userId = (int) current_user_id();

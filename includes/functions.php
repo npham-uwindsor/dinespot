@@ -1,12 +1,44 @@
 <?php
 
+function asset_prefix(): string
+{
+    return $GLOBALS['assetPrefix'] ?? '';
+}
+
 function client_path(string $path): string
 {
-    return $GLOBALS['assetPrefix'] . 'client/' . $path;
+    $path = ltrim(str_replace('\\', '/', $path), '/');
+
+    return asset_prefix() . 'client/' . $path;
 }
+
 function admin_path(string $path): string
 {
-    return $GLOBALS['assetPrefix'] . 'admin/' . $path;
+    $path = ltrim(str_replace('\\', '/', $path), '/');
+
+    return asset_prefix() . 'admin/' . $path;
+}
+
+function should_use_client_path(): bool
+{
+    if (!function_exists('is_logged_in')) {
+        require_once __DIR__ . '/auth.php';
+    }
+
+    return !is_logged_in() || is_client();
+}
+
+function account_path(string $path): string
+{
+    if (!function_exists('is_logged_in')) {
+        require_once __DIR__ . '/auth.php';
+    }
+
+    if (is_logged_in() && is_admin()) {
+        return admin_path($path);
+    }
+
+    return client_path($path);
 }
 
 function e(string $value): string
@@ -69,10 +101,9 @@ function theme_stylesheet(): string
 
 function theme_switch_url(string $theme): string
 {
-    $prefix = $GLOBALS['assetPrefix'] ?? '';
-    $redirect = $_SERVER['REQUEST_URI'] ?? ($prefix . 'index.php');
+    $redirect = $_SERVER['REQUEST_URI'] ?? (asset_prefix() . 'index.php');
 
-    return $prefix . 'admin/theme/switch.php?theme=' . urlencode($theme) . '&redirect=' . urlencode($redirect);
+    return admin_path('theme/switch.php') . '?theme=' . urlencode($theme) . '&redirect=' . urlencode($redirect);
 }
 
 function price_range_label(int $range): string

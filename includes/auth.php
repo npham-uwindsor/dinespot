@@ -23,6 +23,10 @@
         return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     }
 
+    function is_client(): bool {
+        return is_logged_in() && current_user_role() === 'client';
+    }
+
     function current_user_role(): string {
         return isset($_SESSION['role']) ? $_SESSION['role'] : 'client';
     }

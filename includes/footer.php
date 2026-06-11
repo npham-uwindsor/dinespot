@@ -18,7 +18,7 @@
                     <?php if (is_admin()): ?>
                         <li><a href="<?= e($assetPrefix ?? '') ?>charts/index.php">Insights</a></li>
                     <?php endif; ?>
-                    <li><a href="<?= e($assetPrefix ?? '') ?>client/register.php">Create Account</a></li>
+                    <li><a href="<?= e(client_path('register.php')) ?>">Create Account</a></li>
                     <li><a href="<?= e($assetPrefix ?? '') ?>sitemap.php">Site Map</a></li>
                 </ul>
             </div>

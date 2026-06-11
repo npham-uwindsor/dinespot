@@ -52,16 +52,24 @@ $bodyClass = $bodyClass ?? '';
                 <?php if (is_admin()): ?>
                     <a href="<?= e($assetPrefix ?? '') ?>charts/index.php"<?= is_active_page('charts') ? ' aria-current="page"' : '' ?>>Insights</a>
                 <?php endif; ?>
-                <?php if (is_logged_in()): ?>
-                    <a class="nav-cta nav-cta-outline nav-cta-profile" href="<?= e($assetPrefix ?? '') ?>client/profile.php">
+                <?php if (is_client()): ?>
+                    <a class="nav-cta nav-cta-outline nav-cta-profile" href="<?= e(client_path('profile.php')) ?>">
                         <span class="material-symbols-outlined" aria-hidden="true">account_circle</span> Profile
                     </a>
-                    <a class="nav-cta" href="<?= e($assetPrefix ?? '') ?>client/logout.php">
+                    <a class="nav-cta" href="<?= e(client_path('logout.php')) ?>">
+                        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+                        Logout
+                    </a>
+                <?php elseif (is_admin()): ?>
+                    <a class="nav-cta nav-cta-outline nav-cta-profile" href="<?= e(admin_path('management/profile.php'))?>">
+                        <span class="material-symbols-outlined" aria-hidden="true">account_circle</span> Admin Profile
+                    </a>
+                    <a class="nav-cta" href="<?= e(admin_path('logout.php')) ?>">
                         <span class="material-symbols-outlined" aria-hidden="true">logout</span>
                         Logout
                     </a>
                 <?php else: ?>
-                    <a class="nav-cta" href="<?= e($assetPrefix ?? '') ?>client/login.php">Sign In</a>
+                    <a class="nav-cta" href="<?= e(client_path('login.php')) ?>">Sign In</a>
                 <?php endif; ?>
             </nav>
         </div>

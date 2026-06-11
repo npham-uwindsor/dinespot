@@ -44,13 +44,13 @@ if ($restaurant && $mapLat && $mapLng) {
 
 $favouriteIcon = $assetPrefix . 'assets/images/svg/favorite_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg';
 $restaurantViewUrl = $assetPrefix . 'restaurants/view.php?id=' . $id;
-$loginForFavAndResUrl = $assetPrefix . 'client/login.php?redirect=' . urlencode($restaurantViewUrl);
+$loginForFavAndResUrl = client_path('login.php') . '?redirect=' . urlencode($restaurantViewUrl);
 $isFavourited = false;
 $isReserved = false;
 
 $userReview = null;
 $activeReservation = null;
-if ($restaurant && is_logged_in()) {
+if ($restaurant && is_client()) {
     $userId = (int) current_user_id();
     $isFavourited = is_restaurant_favourited($userId, $id);
     $isReserved = is_restaurant_reserved($userId, $id);
@@ -60,11 +60,15 @@ if ($restaurant && is_logged_in()) {
     }
 }
 
-$favouriteActionUrl = $assetPrefix . 'client/favourite_toggle.php?restaurant_id=' . $id . '&redirect=' . urlencode($restaurantViewUrl);
-$favouriteHref = is_logged_in() ? $favouriteActionUrl : $loginForFavAndResUrl;
+$favouriteActionUrl = client_path('favourite_toggle.php') . '?restaurant_id=' . $id . '&redirect=' . urlencode($restaurantViewUrl);
+$reservationActionUrl = client_path('reservation_toggle.php') . '?restaurant_id=' . $id . '&redirect=' . urlencode($restaurantViewUrl);
+$favouriteHref = $loginForFavAndResUrl;
+$reservationHref = $loginForFavAndResUrl;
 
-$reservationActionUrl = $assetPrefix . 'client/reservation_toggle.php?restaurant_id=' . $id . '&redirect=' . urlencode($restaurantViewUrl);
-$reservationHref = is_logged_in() ? $reservationActionUrl : $loginForFavAndResUrl;
+if (is_client()) {
+    $favouriteHref = $favouriteActionUrl;
+    $reservationHref = $reservationActionUrl;
+}
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -111,6 +115,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
                 </div>
                 <div class="hero-actions">
+                    <?php if (should_use_client_path()): ?>
                     <a
                         class="btn btn-primary btn-favourite<?= $isFavourited ? ' is-favourited' : '' ?>"
                         href="<?= e($favouriteHref) ?>"
@@ -122,7 +127,8 @@ require_once __DIR__ . '/../includes/header.php';
                             aria-hidden="true"
                         >
                     </a>
-                    <?php if ($isReserved && $activeReservation): ?>
+                    <?php endif; ?>
+                    <?php if (is_client() && $isReserved && $activeReservation): ?>
                         <button
                             type="button"
                             class="btn btn-primary btn-reservation is-reserved"
@@ -133,11 +139,11 @@ require_once __DIR__ . '/../includes/header.php';
                             data-reservation-time="<?= e(date('g:i A', strtotime($activeReservation['reservation_time']))) ?>"
                             data-party-size="<?= (int) $activeReservation['party_size'] ?>"
                             data-redirect="<?= e($restaurantViewUrl) ?>"
-                            data-form-action="<?= e($assetPrefix) ?>client/cancel_reservation.php"
+                            data-form-action="<?= e(client_path('cancel_reservation.php')) ?>"
                         >
                             Reserved
                         </button>
-                    <?php else: ?>
+                    <?php elseif (should_use_client_path()): ?>
                         <a
                             class="btn btn-primary btn-reservation"
                             href="<?= e($reservationHref) ?>"
@@ -216,16 +222,16 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="content-card" style="margin-top: 1.5rem;">
                 <div class="profile-header">
                     <h2>Reviews</h2>
-                    <?php if (is_logged_in()): ?>
+                    <?php if (is_client()): ?>
                         <?php if ($userReview): ?>
-                            <a class="btn btn-secondary" href="<?= e($assetPrefix) ?>client/edit_review.php?id=<?= (int) $userReview['id'] ?>">Edit Your Review</a>
+                            <a class="btn btn-secondary" href="<?= e(client_path('edit_review.php?id=' . (int) $userReview['id'])) ?>">Edit Your Review</a>
                         <?php else: ?>
-                            <a class="btn btn-primary" href="<?= e($assetPrefix) ?>client/add_review.php?restaurant_id=<?= $id ?>">Write a Review</a>
+                            <a class="btn btn-primary" href="<?= e(client_path('add_review.php?restaurant_id=' . $id)) ?>">Write a Review</a>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 <?php if ($reviews === [] && !is_logged_in()): ?>
-                    <p>No reviews yet. <a href="<?= e($assetPrefix) ?>client/login.php?redirect=<?= urlencode($restaurantViewUrl) ?>">Sign in</a> to be the first to review.</p>
+                    <p>No reviews yet. <a href="<?= e(client_path('login.php?redirect=' . urlencode($restaurantViewUrl))) ?>">Sign in</a> to be the first to review.</p>
                 <?php elseif ($reviews === []): ?>
                     <p>No reviews yet. Be the first to share your experience.</p>
                 <?php else: ?>
@@ -249,7 +255,7 @@ require_once __DIR__ . '/../includes/header.php';
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <?php endif; ?>
 
-    <?php if (is_logged_in()): ?>
+    <?php if (is_client()): ?>
         <?php require __DIR__ . '/../includes/partials/confirm-modal.php'; ?>
     <?php endif; ?>
 <?php endif; ?>
