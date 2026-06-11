@@ -1,0 +1,32 @@
+/* Classic theme — burgundy & gold */
+:root {
+    --color-primary: #8b2942;
+    --color-primary-dark: #6d1f33;
+    --color-accent: #c9a962;
+
+    --color-bg: #faf8f5;
+    --color-surface: #ffffff;
+    --color-text: #1f1a17;
+    --color-muted: #5c534c;
+    --color-border: #e8e0d8;
+    --color-accent-soft: #f5efe3;
+    --color-favourite: #fed988;
+
+    --color-header-bg: rgba(255, 255, 255, 0.95);
+    --color-hero-start: #ffffff;
+    --color-hero-end: #f5efe3;
+
+    --color-footer-bg: #1f1a17;
+    --color-footer-text: #f3ece4;
+    --color-footer-muted: #c9bfb4;
+    --color-footer-border: rgba(255, 255, 255, 0.12);
+
+    --color-success: #2d6a4f;
+    --color-success-bg: #e8f5ef;
+    --color-error: #9b2226;
+    --color-error-bg: #fdecea;
+    --color-focus-ring: rgba(139, 41, 66, 0.25);
+
+    --shadow-sm: 0 1px 3px rgba(31, 26, 23, 0.08);
+    --shadow-md: 0 8px 24px rgba(31, 26, 23, 0.1);
+}

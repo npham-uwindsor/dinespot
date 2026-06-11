@@ -1,0 +1,31 @@
+/* Midnight theme — teal & coral */
+:root {
+    --color-primary: #0d5c63;
+    --color-primary-dark: #094449;
+    --color-accent: #f4a261;
+
+    --color-bg: #f0f7f7;
+    --color-surface: #ffffff;
+    --color-text: #0f2427;
+    --color-muted: #4a6366;
+    --color-border: #d4e4e6;
+    --color-accent-soft: #fdf0e4;
+
+    --color-header-bg: rgba(255, 255, 255, 0.95);
+    --color-hero-start: #ffffff;
+    --color-hero-end: #e8f4f4;
+
+    --color-footer-bg: #0a3d42;
+    --color-footer-text: #e8f4f4;
+    --color-footer-muted: #a8c5c8;
+    --color-footer-border: rgba(255, 255, 255, 0.14);
+
+    --color-success: #1b6b4a;
+    --color-success-bg: #e3f5ec;
+    --color-error: #b42318;
+    --color-error-bg: #fdecea;
+    --color-focus-ring: rgba(13, 92, 99, 0.25);
+
+    --shadow-sm: 0 1px 3px rgba(10, 61, 66, 0.08);
+    --shadow-md: 0 8px 24px rgba(10, 61, 66, 0.12);
+}

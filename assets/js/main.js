@@ -1,0 +1,240 @@
+document.addEventListener('DOMContentLoaded', function () {
+    var navToggle = document.querySelector('.nav-toggle');
+    var primaryNav = document.getElementById('primary-nav');
+
+    if (navToggle && primaryNav) {
+        navToggle.addEventListener('click', function () {
+            var isOpen = primaryNav.classList.toggle('is-open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+    }
+
+    document.querySelectorAll('.faq-question').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var item = button.closest('.faq-item');
+            var isOpen = item.classList.contains('is-open');
+
+            document.querySelectorAll('.faq-item').forEach(function (faqItem) {
+                faqItem.classList.remove('is-open');
+                faqItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isOpen) {
+                item.classList.add('is-open');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    var menuTabs = document.querySelectorAll('[data-menu-tab]');
+    var menuPanels = document.querySelectorAll('[data-menu-panel]');
+
+    menuTabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () {
+            menuTabs.forEach(function (item, tabIndex) {
+                var active = tabIndex === index;
+                item.classList.toggle('is-active', active);
+                item.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+
+            menuPanels.forEach(function (panel, panelIndex) {
+                panel.classList.toggle('is-active', panelIndex === index);
+            });
+        });
+    });
+
+    var mapElement = document.getElementById('restaurant-map');
+
+    if (mapElement && typeof L !== 'undefined') {
+        var lat = parseFloat(mapElement.dataset.lat);
+        var lng = parseFloat(mapElement.dataset.lng);
+        var name = mapElement.dataset.name || 'Restaurant';
+
+        var map = L.map(mapElement).setView([lat, lng], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([lat, lng]).addTo(map).bindPopup(name);
+    }
+
+    var guidePanels = document.querySelectorAll('[data-guide-panel]');
+    var guideTriggers = document.querySelectorAll('[data-guide-trigger]');
+    var guideSteps = document.querySelectorAll('[data-guide-step]');
+    var guidePrev = document.getElementById('guide-prev');
+    var guideNext = document.getElementById('guide-next');
+    var activeGuideStep = 0;
+
+    function showGuideStep(index) {
+        if (!guidePanels.length) {
+            return;
+        }
+
+        activeGuideStep = index;
+        guidePanels.forEach(function (panel, panelIndex) {
+            var active = panelIndex === index;
+            panel.classList.toggle('is-active', active);
+            panel.hidden = !active;
+        });
+        guideSteps.forEach(function (step, stepIndex) {
+            var active = stepIndex === index;
+            step.classList.toggle('is-active', active);
+            var button = step.querySelector('[data-guide-trigger]');
+            if (button) {
+                button.setAttribute('aria-current', active ? 'step' : 'false');
+            }
+        });
+        if (guidePrev) {
+            guidePrev.disabled = index === 0;
+        }
+        if (index === guidePanels.length - 1) {
+            guideNext.textContent = 'Finish';
+            guideNext.addEventListener('click', function () {
+                window.location.href = '<?= e($assetPrefix) ?>index.php';
+            });
+        }
+    }
+
+    guideTriggers.forEach(function (button) {
+        button.addEventListener('click', function () {
+            showGuideStep(parseInt(button.getAttribute('data-guide-trigger'), 10));
+        });
+    });
+
+    if (guidePrev) {
+        guidePrev.addEventListener('click', function () {
+            if (activeGuideStep > 0) {
+                showGuideStep(activeGuideStep - 1);
+            }
+        });
+    }
+
+    if (guideNext) {
+        guideNext.addEventListener('click', function () {
+            if (activeGuideStep < guidePanels.length - 1) {
+                showGuideStep(activeGuideStep + 1);
+            }
+        });
+    }
+
+    var confirmModal = document.getElementById('confirm-modal');
+    var confirmModalForm = document.getElementById('confirm-modal-form');
+    var confirmModalTitle = document.getElementById('confirm-modal-title');
+    var confirmModalMessage = document.getElementById('confirm-modal-message');
+    var confirmModalId = document.getElementById('confirm-modal-id');
+    var confirmModalRedirect = document.getElementById('confirm-modal-redirect');
+    var confirmModalSubmit = document.getElementById('confirm-modal-submit');
+    var confirmModalCancel = document.getElementById('confirm-modal-cancel');
+
+    function openConfirmModal(config) {
+        if (!confirmModal || !confirmModalForm) {
+            return;
+        }
+
+        confirmModalTitle.textContent = config.title;
+        confirmModalMessage.textContent = config.message;
+        confirmModalId.value = config.id;
+        confirmModalRedirect.value = config.redirect;
+        confirmModalForm.action = config.action;
+        confirmModalSubmit.textContent = config.submitLabel;
+        confirmModal.hidden = false;
+        document.body.classList.add('modal-open');
+        confirmModalSubmit.focus();
+    }
+
+    function closeConfirmModal() {
+        if (!confirmModal) {
+            return;
+        }
+
+        confirmModal.hidden = true;
+        document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-cancel-reservation]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            openConfirmModal({
+                title: 'Cancel Reservation?',
+                message: 'Cancel your reservation at ' + button.dataset.restaurantName + ' on '
+                    + button.dataset.reservationDate + ' at ' + button.dataset.reservationTime
+                    + ' for ' + button.dataset.partySize + ' guests?',
+                id: button.dataset.reservationId,
+                redirect: button.dataset.redirect,
+                action: button.dataset.formAction,
+                submitLabel: 'Confirm Cancellation'
+            });
+        });
+    });
+
+    document.querySelectorAll('[data-delete-review]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            openConfirmModal({
+                title: 'Delete Review?',
+                message: 'Delete your review for ' + button.dataset.restaurantName + '? This cannot be undone.',
+                id: button.dataset.reviewId,
+                redirect: button.dataset.redirect,
+                action: button.dataset.formAction,
+                submitLabel: 'Delete Review'
+            });
+        });
+    });
+
+    if (confirmModalCancel) {
+        confirmModalCancel.addEventListener('click', closeConfirmModal);
+    }
+
+    if (confirmModal) {
+        confirmModal.addEventListener('click', function (event) {
+            if (event.target === confirmModal) {
+                closeConfirmModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && confirmModal && !confirmModal.hidden) {
+            closeConfirmModal();
+        }
+    });
+
+    if (window.dineSpotCharts && typeof Chart !== 'undefined') {
+        var cuisineCanvas = document.getElementById('cuisine-chart');
+        var reservationCanvas = document.getElementById('reservation-chart');
+
+        if (cuisineCanvas) {
+            new Chart(cuisineCanvas, {
+                type: 'bar',
+                data: {
+                    labels: window.dineSpotCharts.cuisines.labels,
+                    datasets: [{
+                        label: 'Restaurants',
+                        data: window.dineSpotCharts.cuisines.values,
+                        backgroundColor: '#8b2942'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                }
+            });
+        }
+
+        if (reservationCanvas) {
+            new Chart(reservationCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: window.dineSpotCharts.reservations.labels,
+                    datasets: [{
+                        data: window.dineSpotCharts.reservations.values,
+                        backgroundColor: ['#8b2942', '#c9a962', '#2d6a4f', '#9b2226', '#5c534c']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    }
+});
