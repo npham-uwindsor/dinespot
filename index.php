@@ -10,6 +10,7 @@ $bodyClass = 'page-home';
 
 $featured = [];
 $dbError = null;
+$successMessage = $_GET['success'] ?? null;
 
 try {
     if (database_is_ready()) {
@@ -24,6 +25,7 @@ $videoUrl = 'https://youtu.be/g4hiF5axjPc?si=lyX6YaIEcgZfqCEp';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
+<!-- Hero: headline, CTA buttons, and intro video -->
 <section class="home-hero">
     <div class="container home-hero-grid">
         <div>
@@ -47,8 +49,14 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<!-- Featured restaurant grid (loaded from database) -->
 <section class="page-content">
     <div class="container">
+        <?php if ($successMessage): ?>
+            <div class="alert alert-success" role="alert">
+                <?= e($successMessage) ?>
+            </div>
+        <?php endif; ?>
         <?php if ($dbError): ?>
             <div class="alert alert-error" role="alert"><?= e($dbError) ?></div>
         <?php elseif ($featured === []): ?>

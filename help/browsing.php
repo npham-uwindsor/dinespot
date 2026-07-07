@@ -1,0 +1,58 @@
+<?php
+
+$assetPrefix = '../';
+$activeHelpPage = 'browsing.php';
+
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+$pageTitle = 'Help: Browsing Restaurants';
+$pageDescription = 'Learn how to browse, search, and compare restaurants on DineSpot.';
+$bodyClass = 'page-help';
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>Browsing Restaurants</h1>
+        <p class="lead">Find restaurants, read menus, and estimate meal costs before you book.</p>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container client-layout">
+        <?php require __DIR__ . '/_sidebar.php'; ?>
+
+        <div class="client-main">
+            <div class="content-card">
+                <p>Listen to a short explanation of this help topic.</p>
+                <audio controls>
+                    <source src="<?= e(asset_prefix()) ?>assets/media/browsing-help.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <h2>Browse the catalogue</h2>
+                <p>Open <a href="<?= e(asset_prefix()) ?>restaurants/index.php">Restaurants</a> to see every active listing. Each card shows cuisine, city, price range, and rating when reviews are available.</p>
+
+                <h2>Search with filters</h2>
+                <p>Use <a href="<?= e(asset_prefix()) ?>restaurants/search.php">Search</a> to filter by keyword, cuisine, and city. Results update after you submit the search form.</p>
+                <ol>
+                    <li>Enter a keyword such as <em>sushi</em>, <em>Thai</em>, or <em>BBQ</em>.</li>
+                    <li>Optionally choose a cuisine and city from the dropdown lists.</li>
+                    <li>Click <strong>Search</strong> to refresh the results.</li>
+                </ol>
+
+                <h2>Open a restaurant page</h2>
+                <p>Click any restaurant to view photos, menu tabs, map location, reviews, and the meal cost calculator.</p>
+
+                <h2>Use the meal cost calculator</h2>
+                <p>On a restaurant detail page, select menu items and a tip percentage. The calculator updates subtotal, tax, tip, and estimated total instantly without reloading the page.</p>
+
+                <h2>Save favourites</h2>
+                <p>Sign in and click the heart icon on a restaurant page to save it to <a href="<?= e(client_path('favourites.php')) ?>">My Favourites</a>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

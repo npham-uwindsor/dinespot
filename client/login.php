@@ -24,14 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $error = 'Please enter your email and password.';
     } else {
-        $user = get_user_by_email($email);
-
-        if (!$user || !verify_password($password, $user['password_hash'])) {
-            $error = 'Invalid email or password.';
-        } elseif (!is_account_active((int) $user['id'])) {
-            $error = 'Your account has been suspended. Please contact support.';
+        $result = authenticate($email, $password);
+        if (isset($result['error'])) {
+            $error = $result['error'];
         } else {
-            login_user($user);
+            login_user($result['user']);
             header('Location: ' . $redirect);
             exit;
         }

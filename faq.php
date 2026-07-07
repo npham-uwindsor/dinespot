@@ -17,12 +17,24 @@ $faqs = [
         'answer' => 'No. Anyone can browse and search restaurant listings without signing in. An account is required to write reviews, save favourites, and make reservations.',
     ],
     [
+        'question' => 'How do I make a reservation?',
+        'answer' => 'Click on a restaurant listing to view its details. Select a date and time, enter your party size, and click "Request Reservation". You will receive a confirmation email with the restaurant\'s response status.',
+    ],
+    [
+        'question' => 'How do I track my reservation status?',
+        'answer' => 'Sign in to your account and open the "Reservations" page to view the status of your pending, approved, and rejected reservations.',
+    ],
+    [
+        'question' => 'Do you accept reservations via phone?',
+        'answer' => 'No. All reservations must be made through the DineSpot platform. Please sign up to use our services.',
+    ],
+    [
         'question' => 'How do reservations work?',
         'answer' => 'When you request a reservation, DineSpot sends the details to the restaurant for approval. You can track pending, approved, and rejected reservations from your account dashboard. Approved reservations should be treated as confirmed bookings unless the restaurant contacts you directly.',
     ],
     [
         'question' => 'Can I cancel or change a reservation?',
-        'answer' => 'Yes. Sign in and open your reservations page to cancel a booking or view its status. For last-minute changes on the day of your visit, we recommend contacting the restaurant directly as well.',
+        'answer' => 'Yes. Sign in and open your reservations page to cancel a booking or view its status. For last-minute changes on the day of your visit, we recommend contacting the restaurant directly or calling us at ' . SITE_PHONE . ' during support hours.',
     ],
     [
         'question' => 'How are reviews moderated?',
@@ -38,7 +50,7 @@ $faqs = [
     ],
     [
         'question' => 'Who do I contact for technical support?',
-        'answer' => 'Email ' . SITE_EMAIL . ' with your account email and a brief description of the issue. Our support team typically responds within one business day.',
+        'answer' => 'Email ' . SITE_SUPPORT_EMAIL . ' with your account email and a brief description of the issue. Our support team typically responds within three business days.',
     ],
 ];
 
@@ -54,6 +66,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <section class="page-content">
     <div class="container">
+        <!-- Accordion list; expand/collapse handled in main.js -->
         <div class="faq-list" role="list">
             <?php foreach ($faqs as $index => $faq): ?>
                 <article class="faq-item" role="listitem">
@@ -78,6 +91,7 @@ require_once __DIR__ . '/includes/header.php';
             <?php endforeach; ?>
         </div>
 
+        <!-- Fallback contact card -->
         <div class="content-card" style="margin-top: 1.5rem;">
             <h2>Still have questions?</h2>
             <p>Email us at <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a> or call <?= e(SITE_PHONE) ?> during support hours.</p>

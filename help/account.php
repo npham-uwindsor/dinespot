@@ -1,0 +1,58 @@
+<?php
+
+$assetPrefix = '../';
+$activeHelpPage = 'account.php';
+
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+$pageTitle = 'Help: Your Account';
+$pageDescription = 'Learn how to create a DineSpot account, manage your profile, favourites, and reviews.';
+$bodyClass = 'page-help';
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>Your Account</h1>
+        <p class="lead">Create an account, manage your profile, and use favourites and reviews.</p>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container client-layout">
+        <?php require __DIR__ . '/_sidebar.php'; ?>
+
+        <div class="client-main">
+            <div class="content-card">
+                <p>Listen to a short explanation of this help topic.</p>
+                <audio controls>
+                    <source src="<?= e(asset_prefix()) ?>assets/media/account-help.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <h2>Create an account</h2>
+                <p>Visit <a href="<?= e(client_path('register.php')) ?>">Create Account</a> and enter your name, email, phone number, and password. An account is required for reservations, favourites, and reviews.</p>
+
+                <h2>Sign in</h2>
+                <p>Use <a href="<?= e(client_path('login.php')) ?>">Sign In</a> with your email and password. After login you can access your profile and account pages from the main menu.</p>
+
+                <h2>Manage your profile</h2>
+                <p>From <a href="<?= e(client_path('profile.php')) ?>">My Account</a> you can:</p>
+                <ul>
+                    <li>View your account details</li>
+                    <li><a href="<?= e(client_path('edit_profile.php')) ?>">Edit your profile</a></li>
+                    <li><a href="<?= e(client_path('change_password.php')) ?>">Change your password</a></li>
+                </ul>
+
+                <h2>Favourites</h2>
+                <p>Save restaurants with the heart icon on any restaurant page. View them anytime under <a href="<?= e(client_path('favourites.php')) ?>">My Favourites</a>.</p>
+
+                <h2>Reviews</h2>
+                <p>After dining, open a restaurant page and submit a star rating with comments. Edit or review your posts from <a href="<?= e(client_path('my_reviews.php')) ?>">My Reviews</a>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

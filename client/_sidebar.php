@@ -1,8 +1,9 @@
 <?php
 
 /** @var string $activeClientPage */
+require_once __DIR__ . '/../includes/functions.php';
 
-$activeClientPage = $activeClientPage ?? basename($_SERVER['PHP_SELF'] ?? '');
+$activeClientPage = $activeClientPage ?? basename(current_script_path() ?? '');
 
 $clientNavItems = [
     'profile.php' => 'My Account',

@@ -1,7 +1,20 @@
+/**
+ * DineSpot — client-side interactions
+ * Loaded on every page via footer.php. Runs after DOMContentLoaded.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     var navToggle = document.querySelector('.nav-toggle');
     var primaryNav = document.getElementById('primary-nav');
+    var successMessage = document.querySelector('.alert-success');
 
+    // Auto-dismiss success alerts after 5 seconds
+    if (successMessage) {
+        setTimeout(function () {
+            successMessage.style.display = 'none';
+        }, 5000);
+    }
+
+    // Mobile navigation toggle (hamburger menu)
     if (navToggle && primaryNav) {
         navToggle.addEventListener('click', function () {
             var isOpen = primaryNav.classList.toggle('is-open');
@@ -9,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // FAQ accordion — only one item open at a time
     document.querySelectorAll('.faq-question').forEach(function (button) {
         button.addEventListener('click', function () {
             var item = button.closest('.faq-item');
@@ -26,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Restaurant menu tabs on the detail page
     var menuTabs = document.querySelectorAll('[data-menu-tab]');
     var menuPanels = document.querySelectorAll('[data-menu-panel]');
 
@@ -43,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Leaflet map on restaurant detail page (requires Leaflet loaded in page head)
     var mapElement = document.getElementById('restaurant-map');
 
     if (mapElement && typeof L !== 'undefined') {
@@ -59,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         L.marker([lat, lng]).addTo(map).bindPopup(name);
     }
 
+    // Quick guide stepper (guide.php)
     var guidePanels = document.querySelectorAll('[data-guide-panel]');
     var guideTriggers = document.querySelectorAll('[data-guide-trigger]');
     var guideSteps = document.querySelectorAll('[data-guide-step]');
@@ -91,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (index === guidePanels.length - 1) {
             guideNext.textContent = 'Finish';
             guideNext.addEventListener('click', function () {
-                window.location.href = '<?= e($assetPrefix) ?>index.php';
+                window.location.href = 'index.php';
             });
         }
     }
@@ -118,6 +135,114 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Reservation modal — live deposit & demand estimate
+    function formatCurrency(amount) {
+        return '$' + amount.toFixed(2);
+    }
+
+    var reservationDate = document.getElementById('reservation_date');
+    var reservationTime = document.getElementById('reservation_time');
+    var partySizeSelect = document.getElementById('party_size');
+    var reservationOccasion = document.getElementById('reservation_occasion');
+    var reservationDeposit = document.querySelector('[data-reservation-deposit]');
+    var reservationDemand = document.querySelector('[data-reservation-demand]');
+    var reservationNote = document.querySelector('[data-reservation-note]');
+
+    function updateReservationEstimate() {
+        if (!partySizeSelect || !reservationDeposit || !reservationDemand || !reservationNote) {
+            return;
+        }
+
+        var partySize = parseInt(partySizeSelect.value, 10) || 1;
+        var deposit = 0;
+        var demand = 'Standard';
+        var notes = [];
+
+        if (partySize >= 9) {
+            deposit = 50;
+            notes.push('Large parties may require extra confirmation from the restaurant.');
+        } else if (partySize >= 5) {
+            deposit = 20;
+            notes.push('Medium-sized parties may require a small hold deposit.');
+        } else {
+            notes.push('No deposit is estimated for small parties.');
+        }
+
+        if (reservationDate && reservationDate.value) {
+            var selectedDate = new Date(reservationDate.value + 'T00:00:00');
+            var isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
+            if (isWeekend) {
+                demand = 'High';
+                notes.push('Weekend reservations are usually busier.');
+            }
+        }
+
+        if (reservationTime && reservationTime.value) {
+            var hour = parseInt(reservationTime.value.split(':')[0], 10);
+            if (hour >= 18 && hour <= 20) {
+                demand = 'High';
+                notes.push('Dinner rush time may have limited availability.');
+            }
+        }
+
+        if (reservationOccasion && reservationOccasion.value !== '') {
+            notes.push('Add any celebration details in Special Requests.');
+        }
+
+        reservationDeposit.textContent = formatCurrency(deposit);
+        reservationDemand.textContent = demand;
+        reservationNote.textContent = notes.join(' ');
+    }
+
+    [reservationDate, reservationTime, partySizeSelect, reservationOccasion].forEach(function (field) {
+        if (field) {
+            field.addEventListener('input', updateReservationEstimate);
+            field.addEventListener('change', updateReservationEstimate);
+        }
+    });
+    updateReservationEstimate();
+
+    // Meal cost calculator on restaurant detail page (13% tax)
+    var mealCalculator = document.querySelector(".meal-calculator");
+
+    if (mealCalculator) {
+        var mealCalculatorItems = mealCalculator.querySelectorAll('[data-meal-item]');
+        var mealCalculatorTipPercent = mealCalculator.querySelector('[data-tip-percent]');
+        var mealCalculatorSubtotalOutput = mealCalculator.querySelector('[data-meal-subtotal]');
+        var mealCalculatorTaxOutput = mealCalculator.querySelector('[data-meal-tax]');
+        var mealCalculatorTipOutput = mealCalculator.querySelector('[data-meal-tip]');
+        var mealCalculatorTotalOutput = mealCalculator.querySelector('[data-meal-total]');
+        
+        function updateMealTotal() {
+            var subtotal = 0;
+            var selectedTip = mealCalculatorTipPercent ? parseFloat(mealCalculatorTipPercent.value) : 0;
+            
+            mealCalculatorItems.forEach(function (item) {
+                if (item.checked) {
+                    subtotal += parseFloat(item.value) || 0;
+                }
+            });
+            
+            var tax = subtotal * 0.13;
+            var tip = subtotal * (selectedTip / 100);
+            var total = subtotal + tax + tip;
+            
+            mealCalculatorSubtotalOutput.textContent = formatCurrency(subtotal);
+            mealCalculatorTaxOutput.textContent = formatCurrency(tax);
+            mealCalculatorTipOutput.textContent = formatCurrency(tip);
+            mealCalculatorTotalOutput.textContent = formatCurrency(total);
+        }
+
+        mealCalculatorItems.forEach(function (item) {
+            item.addEventListener('change', updateMealTotal);
+        });
+        if (mealCalculatorTipPercent) {
+            mealCalculatorTipPercent.addEventListener('change', updateMealTotal);
+        }
+        updateMealTotal();
+    }
+
+    // Reusable confirmation modal for cancel/delete actions
     var confirmModal = document.getElementById('confirm-modal');
     var confirmModalForm = document.getElementById('confirm-modal-form');
     var confirmModalTitle = document.getElementById('confirm-modal-title');
@@ -154,6 +279,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('[data-cancel-reservation]').forEach(function (button) {
         button.addEventListener('click', function () {
+            if (button.dataset.status == 'approved') {
+                document.querySelector('[data-cancel-reservation-message]').textContent = 'You have an approved reservation at ' + button.dataset.restaurantName + '. You cannot cancel it by yourself. Please call us at (519) 555-0142.';
+                document.querySelector('[data-cancel-reservation-message]').style.display = 'block';
+                document.querySelector('[data-cancel-reservation-message]').style.color = 'red';
+                document.querySelector('#cancel-reservation-button').style.display = 'none';
+                return;
+            }
             openConfirmModal({
                 title: 'Cancel Reservation?',
                 message: 'Cancel your reservation at ' + button.dataset.restaurantName + ' on '
@@ -198,6 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Chart.js visualisations on the Insights page (data injected via window.dineSpotCharts)
     if (window.dineSpotCharts && typeof Chart !== 'undefined') {
         var cuisineCanvas = document.getElementById('cuisine-chart');
         var reservationCanvas = document.getElementById('reservation-chart');

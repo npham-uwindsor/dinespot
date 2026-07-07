@@ -89,6 +89,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
     </section>
 <?php else: ?>
+    <!-- Restaurant hero: image, details, favourite & reserve actions -->
     <section class="restaurant-hero">
         <div class="container">
             <?php if (isset($_GET['cancelled'])): ?>
@@ -157,8 +158,16 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
     </section>
 
+    <!-- Menu tabs, meal calculator, map, and reviews -->
     <section class="page-content">
+        <div class="container">
+            <?php
+            $contextHelpIntro = 'Learn how to read menus, use the meal calculator, and save favourites.';
+            require __DIR__ . '/../includes/partials/context-help.php';
+            ?>
+        </div>
         <div class="container content-grid two-col">
+            <!-- Tabbed menu by category -->
             <div class="content-card">
                 <h2>Menu</h2>
                 <?php if ($menuGrouped === []): ?>
@@ -202,6 +211,69 @@ require_once __DIR__ . '/../includes/header.php';
                 <?php endif; ?>
             </div>
 
+            <?php if ($menuGrouped !== []): ?>
+                <!-- Interactive meal total estimator (tax + tip calculated in main.js) -->
+                <div class="content-card">
+                    <h2>Meal Cost Estimator</h2>
+                    <p class="form-help">Select menu items and a tip amount to estimate your meal total.</p>
+
+                    <form class="meal-calculator">
+                        <fieldset class="meal-calculator-items">
+                            <legend>Choose menu items</legend>
+                            <?php foreach ($menuGrouped as $category => $items): ?>
+                                <div class="meal-calculator-category">
+                                    <h3><?= e($category) ?></h3>
+                                    <?php foreach ($items as $item): ?>
+                                        <?php $itemId = 'meal-item-' . preg_replace('/[^a-z0-9]+/i', '-', strtolower($category . '-' . $item['name'])); ?>
+                                        <label class="meal-calculator-option" for="<?= e($itemId) ?>">
+                                            <input
+                                                type="checkbox"
+                                                id="<?= e($itemId) ?>"
+                                                data-meal-item
+                                                value="<?= e($item['price']) ?>"
+                                            >
+                                            <span><?= e($item['name']) ?></span>
+                                            <strong>$<?= e(number_format((float) $item['price'], 2)) ?></strong>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <label for="tip_percent">Tip</label>
+                            <select id="tip_percent" data-tip-percent>
+                                <option value="0">No tip</option>
+                                <option value="10">10%</option>
+                                <option value="15" selected>15%</option>
+                                <option value="18">18%</option>
+                                <option value="20">20%</option>
+                            </select>
+                        </div>
+
+                        <dl class="quote-summary meal-summary" aria-live="polite">
+                            <div>
+                                <dt>Subtotal</dt>
+                                <dd data-meal-subtotal>$0.00</dd>
+                            </div>
+                            <div>
+                                <dt>Tax (13%)</dt>
+                                <dd data-meal-tax>$0.00</dd>
+                            </div>
+                            <div>
+                                <dt>Tip</dt>
+                                <dd data-meal-tip>$0.00</dd>
+                            </div>
+                            <div class="quote-summary-total">
+                                <dt>Estimated total</dt>
+                                <dd data-meal-total>$0.00</dd>
+                            </div>
+                        </dl>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+            <!-- Leaflet map (initialised in main.js when coordinates exist) -->
             <div class="content-card">
                 <h2>Location</h2>
                 <?php if ($mapLat && $mapLng): ?>
@@ -219,6 +291,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <div class="container">
+            <!-- User-submitted reviews -->
             <div class="content-card" style="margin-top: 1.5rem;">
                 <div class="profile-header">
                     <h2>Reviews</h2>
@@ -252,6 +325,7 @@ require_once __DIR__ . '/../includes/header.php';
     </section>
 
     <?php if ($mapLat && $mapLng): ?>
+        <!-- Leaflet library (map init runs in main.js) -->
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <?php endif; ?>
 

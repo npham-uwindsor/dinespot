@@ -59,6 +59,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="page-content">
     <div class="container">
         <div class="guide-layout">
+            <!-- Step list sidebar -->
             <ol class="guide-steps" id="guide-steps">
                 <?php foreach ($steps as $index => $step): ?>
                     <li class="guide-step<?= $index === 0 ? ' is-active' : '' ?>" data-guide-step>
@@ -74,6 +75,7 @@ require_once __DIR__ . '/includes/header.php';
                 <?php endforeach; ?>
             </ol>
 
+            <!-- Step detail panel; prev/next navigation in main.js -->
             <div class="content-card guide-panel">
                 <?php foreach ($steps as $index => $step): ?>
                     <article
@@ -93,6 +95,7 @@ require_once __DIR__ . '/includes/header.php';
                     <button type="button" class="btn btn-secondary" id="guide-prev" disabled>Previous</button>
                     <button type="button" class="btn btn-primary" id="guide-next">Next</button>
                 </div>
+                <p style="margin-top: 1.5rem;">Need more detail? Browse the <a href="<?= e(help_path()) ?>">Help Wiki</a> for topic-based instructions.</p>
             </div>
         </div>
     </div>

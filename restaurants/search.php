@@ -37,6 +37,10 @@ require_once __DIR__ . '/../includes/header.php';
 
 <section class="page-content">
     <div class="container">
+        <?php
+        $contextHelpIntro = 'Learn how to search by keyword, cuisine, and city.';
+        require __DIR__ . '/../includes/partials/context-help.php';
+        ?>
         <form class="search-form content-card" method="get" action="search.php">
             <div class="search-form-grid">
                 <div class="form-group">

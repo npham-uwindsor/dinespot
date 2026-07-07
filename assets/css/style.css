@@ -1,3 +1,7 @@
+/* 
+This is the main CSS file for the Dinespot website.
+The theme will be loaded dynamically if user changes the theme.
+*/
 :root {
     --radius: 12px;
     --font-body: "DM Sans", system-ui, sans-serif;
@@ -5,6 +9,7 @@
     --max-width: 1120px;
 }
 
+/* --- Base reset & typography --- */
 *,
 *::before,
 *::after {
@@ -56,6 +61,7 @@ ol {
     padding-left: 1.25rem;
 }
 
+/* --- Accessibility utilities --- */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -84,6 +90,7 @@ ol {
     top: 1rem;
 }
 
+/* --- Site header & primary navigation --- */
 .container {
     width: min(100% - 2rem, var(--max-width));
     margin-inline: auto;
@@ -223,6 +230,7 @@ ol {
     color: var(--color-primary-dark) !important;
 }
 
+/* --- Page layout & content cards --- */
 .page-hero {
     padding: 3.5rem 0 2.5rem;
     background: linear-gradient(135deg, var(--color-hero-start) 0%, var(--color-hero-end) 100%);
@@ -358,6 +366,7 @@ ol {
     margin-bottom: 0.15rem;
 }
 
+/* --- FAQ --- */
 .faq-list {
     display: grid;
     gap: 0.75rem;
@@ -424,6 +433,7 @@ ol {
     margin-bottom: 1rem;
 }
 
+/* --- Theme picker (admin settings) --- */
 .theme-switcher {
     display: flex;
     flex-wrap: wrap;
@@ -455,6 +465,138 @@ ol {
     color: var(--color-footer-bg);
 }
 
+.theme-settings-form {
+    margin-top: 1.5rem;
+}
+
+.form-help,
+.theme-preview-note {
+    color: var(--color-muted);
+    margin: 0 0 1rem;
+}
+
+.quote-panel {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-accent-soft);
+}
+
+.quote-panel h2 {
+    margin-bottom: 0.35rem;
+    font-size: 1.25rem;
+}
+
+.quote-summary {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+}
+
+.quote-summary div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.quote-summary div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.quote-summary dt {
+    color: var(--color-muted);
+}
+
+.quote-summary dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+}
+
+.quote-summary .quote-summary-total {
+    font-size: 1.1rem;
+}
+
+.theme-options {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-option.is-selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.theme-option-label {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.theme-option-label input {
+    flex-shrink: 0;
+}
+
+.theme-option-body {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.theme-option-swatches {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.theme-option-swatches span {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.theme-option-copy {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.theme-option-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.theme-option-description {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.theme-option-preview {
+    flex-shrink: 0;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* --- Site footer --- */
 .site-footer {
     margin-top: auto;
     background: var(--color-footer-bg);
@@ -518,6 +660,7 @@ ol {
     font-size: 0.9rem;
 }
 
+/* --- Home page hero --- */
 .home-hero {
     padding: 3rem 0;
     background: linear-gradient(135deg, var(--color-hero-start) 0%, var(--color-hero-end) 100%);
@@ -570,6 +713,7 @@ ol {
     color: #fff !important;
 }
 
+/* --- Modals & reservation overlay --- */
 .page-reservation-modal main {
     min-height: calc(100vh - 5rem);
 }
@@ -596,6 +740,8 @@ body.modal-open {
 .modal-card {
     width: 100%;
     max-width: 28rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
     padding: 2rem;
     border-radius: var(--radius);
     background: var(--color-surface);
@@ -656,6 +802,7 @@ body.modal-open {
     margin: 0;
 }
 
+/* --- Restaurant cards & listing grid --- */
 .restaurant-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -748,6 +895,7 @@ body.modal-open {
     font-weight: 500;
 }
 
+/* --- Buttons & alerts --- */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -775,6 +923,7 @@ body.modal-open {
     background: transparent;
     color: var(--color-primary);
     border: 1px solid var(--color-border);
+    text-align: center;
 }
 
 .btn-secondary:hover {
@@ -800,6 +949,7 @@ body.modal-open {
     border: 1px solid var(--color-border);
 }
 
+/* --- Client account sidebar layout --- */
 .client-layout {
     display: grid;
     grid-template-columns: 240px minmax(0, 1fr);
@@ -896,6 +1046,7 @@ body.modal-open {
     margin-top: 0.5rem;
 }
 
+/* --- Quick guide stepper --- */
 .guide-layout {
     display: grid;
     grid-template-columns: minmax(220px, 280px) 1fr;
@@ -943,6 +1094,52 @@ body.modal-open {
     margin-top: 1.5rem;
 }
 
+.context-help {
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-accent-soft);
+}
+
+.context-help-link {
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.context-help p {
+    margin: 0.35rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.help-topic-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.help-topic-list li {
+    display: grid;
+    gap: 0.2rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.help-topic-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.help-topic-list span {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+/* --- Charts & insights page --- */
 .charts-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -988,6 +1185,105 @@ body.modal-open {
     margin: 0;
 }
 
+/* --- Admin dashboard & data tables --- */
+.admin-stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-stat-label {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.admin-stat-highlight {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+}
+
+.admin-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.admin-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.admin-dashboard-grid .content-card {
+    margin-top: 0;
+}
+
+.admin-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-panel-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.admin-activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-activity-list li + li {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.admin-activity-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-activity-item p {
+    margin: 0.25rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.admin-activity-item-review {
+    display: block;
+}
+
+.admin-review-rating {
+    margin-left: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.admin-review-comment {
+    margin-top: 0.35rem !important;
+    color: var(--color-text) !important;
+}
+
+.admin-site-summary {
+    margin-top: 1rem;
+}
+
+.admin-summary-details {
+    margin-top: 1rem;
+}
+
 .status-badge {
     padding: 0.25rem 0.65rem;
     border-radius: 999px;
@@ -1012,6 +1308,225 @@ body.modal-open {
     color: var(--color-error);
 }
 
+.status-active {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.status-suspended {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.container.client-layout.admin-reservations-card {
+    width: min(100% - 2rem, 1400px);
+}
+
+.admin-users-card {
+    overflow: hidden;
+    padding: 0;
+}
+
+.admin-users-card .alert {
+    margin: 1.25rem 1.25rem 0;
+}
+
+.admin-table-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.35rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: linear-gradient(135deg, var(--color-accent-soft) 0%, transparent 55%);
+}
+
+.admin-table-toolbar h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.admin-table-meta {
+    margin: 0.35rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.admin-table-empty {
+    padding: 2rem 1.5rem;
+    margin: 0;
+    color: var(--color-muted);
+    text-align: center;
+}
+
+.admin-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.admin-data-table thead th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+}
+
+.admin-data-table tbody tr {
+    transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.admin-data-table tbody tr:hover {
+    background: var(--color-accent-soft);
+}
+
+.admin-data-table tbody tr.is-suspended {
+    opacity: 0.72;
+}
+
+.admin-data-table tbody tr.is-suspended:hover {
+    opacity: 1;
+}
+
+.admin-data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.admin-data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.user-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--color-primary), var(--color-primary-dark));
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 28%, transparent);
+}
+
+.admin-table-user-cell {
+    min-width: 14rem;
+}
+
+.admin-table-user-name {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+}
+
+.admin-table-user-email {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.admin-table-user-id {
+    display: inline-block;
+    margin-top: 0.35rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-family: ui-monospace, "Cascadia Code", monospace;
+}
+
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.role-admin {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    color: var(--color-primary-dark);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+.role-client {
+    background: var(--color-bg);
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+}
+
+.status-badge .status-dot {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-right: 0.35rem;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: 0.05em;
+}
+
+.status-badge.status-inactive {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.admin-table-phone {
+    color: var(--color-muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-table-actions {
+    white-space: nowrap;
+}
+
+.btn-admin-action {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+    border-radius: 999px;
+}
+
+.btn-suspend {
+    background: transparent;
+    color: var(--color-error);
+    border: 1px solid color-mix(in srgb, var(--color-error) 35%, transparent);
+}
+
+.btn-suspend:hover {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.btn-unsuspend {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid color-mix(in srgb, var(--color-success) 35%, transparent);
+}
+
+.btn-unsuspend:hover {
+    background: var(--color-success);
+    color: #fff;
+}
+
 .restaurant-grid-compact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1023,6 +1538,7 @@ body.modal-open {
     color: var(--color-muted);
 }
 
+/* --- Search & form controls --- */
 .search-form-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1059,6 +1575,13 @@ body.modal-open {
     border-color: var(--color-primary);
 }
 
+.form-group input[type="checkbox"] {
+    width: auto;
+    padding: 0;
+    margin-top: 0.15rem;
+}
+
+/* --- Restaurant detail page --- */
 .restaurant-hero {
     padding: 2rem 0;
     background: var(--color-surface);
@@ -1150,6 +1673,50 @@ body.modal-open {
     font-size: 0.95rem;
 }
 
+.meal-calculator {
+    display: grid;
+    gap: 1rem;
+}
+
+.meal-calculator-items {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.meal-calculator-items legend {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.meal-calculator-category h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.meal-calculator-option {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.meal-calculator-option:last-child {
+    border-bottom: 0;
+}
+
+.meal-summary {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-accent-soft);
+}
+
 .restaurant-map {
     width: 100%;
     height: 320px;
@@ -1185,6 +1752,7 @@ body.modal-open {
     color: var(--color-muted);
 }
 
+/* --- Responsive breakpoints --- */
 @media (max-width: 900px) {
     .content-grid.two-col,
     .stats-row,
@@ -1197,6 +1765,10 @@ body.modal-open {
     .restaurant-grid-compact,
     .guide-layout,
     .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-dashboard-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1235,8 +1807,42 @@ body.modal-open {
     .nav-cta {
         text-align: center;
     }
+
+    .theme-option {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .theme-option-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .theme-option-preview {
+        width: 100%;
+    }
+
+    .admin-table-toolbar {
+        padding: 1rem;
+    }
+
+    .admin-data-table {
+        font-size: 0.88rem;
+    }
+
+    .admin-data-table td,
+    .admin-data-table thead th {
+        padding: 0.75rem 0.65rem;
+    }
+
+    .user-avatar {
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 0.72rem;
+    }
 }
 
+/* --- Site map page --- */
 .sitemap {
     width: min(100% - 2rem, 32rem);
     margin: 2rem auto;
@@ -1265,4 +1871,8 @@ body.modal-open {
 
 .sitemap a:hover {
     color: var(--color-primary);
+}
+
+.charts-grid .chart-card + .chart-card {
+    margin-top: 0;
 }

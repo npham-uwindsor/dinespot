@@ -1,6 +1,8 @@
-DROP DATABASE IF EXISTS dinespot;
-CREATE DATABASE dinespot CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE dinespot;
+-- Uncomment the following lines to create the database and tables
+-- SET FOREIGN_KEY_CHECKS = 0;
+-- DROP DATABASE IF EXISTS dinespot;
+-- CREATE DATABASE dinespot CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE dinespot;
 
 -- ============================================================
 -- TABLES
@@ -123,7 +125,7 @@ INSERT INTO restaurants (name, cuisine, city, province, description, address, im
 ('Au Pied de Cochon', 'French', 'Montreal', 'QC', 'Experience decadent, foie gras-heavy Quebecois-French comfort food.', '536 Avenue Duluth E, Montreal, QC', 'assets/images/restaurants/french.jpg', 45.5271000, -73.5744000, 4, 1),
 ('Sushi Masaki Saito', 'Japanese', 'Toronto', 'ON', 'A highly celebrated 2-Michelin-starred Edomae sushi experience.', '88 Avenue Rd, Toronto, ON', 'assets/images/restaurants/japan.jpg', 43.6711000, -79.3956000, 4, 1),
 ('PAI', 'Thai', 'Toronto', 'ON', 'Authentic Northern Thai street-style food and hospitality.', '18 Duncan St, Toronto, ON', 'assets/images/restaurants/thai.jpg', 43.6475000, -79.3892000, 2, 1),
-('Restaurant Pearl Morissette', 'Contemporary Canadian', 'Jordan Station', 'ON', 'Farm-to-table dining featuring French-inspired Canadian dishes.', '3953 Jordan Rd, Jordan Station, ON', 'assets/images/restaurants/canada.jpg', 43.1550000, -79.3670000, 4, 1),
+('Restaurant Pearl Morissette', 'Canadian', 'Jordan Station', 'ON', 'Farm-to-table dining featuring French-inspired Canadian dishes.', '3953 Jordan Rd, Jordan Station, ON', 'assets/images/restaurants/canada.jpg', 43.1550000, -79.3670000, 4, 1),
 ('Buca', 'Italian', 'Toronto', 'ON', 'Known for rustic Italian cooking, cured meats, and authentic seafood.', '604 King St W, Toronto, ON', 'assets/images/restaurants/italy.jpg', 43.6443000, -79.4011000, 3, 1),
 ('Vij''s', 'Modern Indian', 'Vancouver', 'BC', 'Award-winning, inventive, and globally acclaimed Indian cuisine.', '3106 Main St, Vancouver, BC', 'assets/images/restaurants/india.jpg', 49.2557000, -123.1006000, 3, 1),
 ('Dasha', 'Chinese', 'Toronto', 'ON', 'High-end contemporary Pan-Asian and Northern Chinese cuisine.', '1229 Dundas St W, Toronto, ON', 'assets/images/restaurants/china.jpg', 43.6492000, -79.4201000, 3, 1),
@@ -139,10 +141,10 @@ INSERT INTO restaurants (name, cuisine, city, province, description, address, im
 ('Kay Pacha', 'Peruvian', 'Toronto', 'ON', 'Upscale, modern take on traditional Peruvian ceviches and anticuchos.', '74 Ossington Ave, Toronto, ON', 'assets/images/restaurants/peru.jpg', 43.6479000, -79.4197000, 3, 1),
 ('The Old Spaghetti Factory', 'German', 'Toronto', 'ON', 'A Canadian staple serving comforting European and Italian-style pasta.', '1 Austin Terrace, Toronto, ON', 'assets/images/restaurants/germany.jpg', 43.6780000, -79.4094000, 2, 1),
 ('Asado', 'Argentine', 'Vancouver', 'BC', 'Traditional Argentine parrillada and wood-fired meats.', '1319 Commercial Dr, Vancouver, BC', 'assets/images/restaurants/argentina.jpg', 49.2734000, -123.0695000, 3, 1),
-('Big Bone BBQ', 'American BBQ', 'Windsor', 'ON', 'Southern-style smoked ribs, brisket, and pulled pork.', '2450 Dougall Ave, Windsor, ON', 'assets/images/restaurants/america.jpg', 42.2956000, -83.0066000, 2, 1);
+('Big Bone BBQ', 'American', 'Windsor', 'ON', 'Southern-style smoked ribs, brisket, and pulled pork.', '2450 Dougall Ave, Windsor, ON', 'assets/images/restaurants/america.jpg', 42.2956000, -83.0066000, 2, 1);
 
 -- ============================================================
--- MENU ITEMS (3 per restaurant)
+-- MENU ITEMS (3 per restaurant => 60 records)
 -- ============================================================
 
 INSERT INTO menu_items (restaurant_id, category, name, description, price) VALUES
@@ -151,7 +153,6 @@ INSERT INTO menu_items (restaurant_id, category, name, description, price) VALUE
 (1, 'Desserts', 'Sugar Pie', 'Traditional Quebec dessert with maple cream.', 12.00),
 (2, 'Starters', 'Edomae Otsumami', 'Seasonal Japanese small plates.', 28.00),
 (2, 'Mains', 'Omakase Nigiri Set', 'Chef-selected sushi tasting.', 120.00),
-(2, 'Desserts', 'Matcha Mochi', 'Light green tea dessert.', 14.00),
 (3, 'Starters', 'Khao Soi', 'Northern Thai coconut curry noodle soup.', 18.00),
 (3, 'Mains', 'Pad Thai', 'Stir-fried rice noodles with tamarind and peanuts.', 19.00),
 (3, 'Desserts', 'Mango Sticky Rice', 'Sweet coconut rice with fresh mango.', 11.00),
@@ -175,7 +176,6 @@ INSERT INTO menu_items (restaurant_id, category, name, description, price) VALUE
 (9, 'Desserts', 'Coconut Coffee', 'Vietnamese iced coffee.', 6.00),
 (10, 'Starters', 'Sambusa', 'Spiced lentil pastries.', 8.00),
 (10, 'Mains', 'Doro Wat Platter', 'Chicken stew with injera and sides.', 22.00),
-(10, 'Desserts', 'Honey Bread', 'Sweet Ethiopian bread with spices.', 7.00),
 (11, 'Starters', 'Grilled Octopus', 'Mediterranean octopus with lemon.', 26.00),
 (11, 'Mains', 'Whole Grilled Lavraki', 'Sea bass prepared tableside.', 58.00),
 (11, 'Desserts', 'Greek Yogurt', 'With thyme honey and walnuts.', 11.00),
@@ -185,30 +185,27 @@ INSERT INTO menu_items (restaurant_id, category, name, description, price) VALUE
 (13, 'Starters', 'Kimchi Fries', 'Fries topped with kimchi and sauce.', 11.00),
 (13, 'Mains', 'Bulgogi Pizza', 'Korean-Canadian fusion favourite.', 19.00),
 (13, 'Desserts', 'Bingsu', 'Shaved ice dessert with toppings.', 12.00),
-(14, 'Starters', 'Pao de Queijo', 'Brazilian cheese bread.', 8.00),
 (14, 'Mains', 'Churrasco Platter', 'Assorted grilled meats.', 42.00),
 (14, 'Desserts', 'Brigadeiro', 'Chocolate truffle dessert.', 8.00),
 (15, 'Starters', 'Jamaican Patty', 'Spiced beef or vegetable patty.', 4.50),
-(15, 'Mains', 'Jerk Chicken Plate', 'Slow-cooked jerk chicken with rice.', 16.00),
-(15, 'Desserts', 'Rum Cake Slice', 'Caribbean spiced cake.', 6.00),
-(16, 'Starters', 'Falafel Plate', 'Crispy falafel with tahini.', 9.00),
-(16, 'Mains', 'Chicken Shawarma', 'Classic Montreal shawarma wrap.', 12.00),
-(16, 'Desserts', 'Baklava', 'Honey and pistachio pastry.', 7.00),
-(17, 'Starters', 'Classic Ceviche', 'Fresh fish with lime and aji.', 18.00),
-(17, 'Mains', 'Lomo Saltado', 'Stir-fried beef with fries and rice.', 28.00),
-(17, 'Desserts', 'Alfajores', 'Dulce de leche cookies.', 9.00),
-(18, 'Starters', 'Garlic Bread', 'Warm bread with garlic butter.', 7.00),
-(18, 'Mains', 'Spaghetti with Mizithra', 'Brown butter and cheese pasta.', 18.00),
-(18, 'Desserts', 'Spumoni Ice Cream', 'Three-flavour Italian ice cream.', 8.00),
-(19, 'Starters', 'Empanadas', 'Beef empanadas with chimichurri.', 14.00),
-(19, 'Mains', 'Parrillada Mixta', 'Mixed grill for two.', 72.00),
-(19, 'Desserts', 'Dulce de Leche Flan', 'Creamy caramel custard.', 11.00),
-(20, 'Starters', 'Smoked Wings', 'BBQ wings with house rub.', 14.00),
-(20, 'Mains', 'Brisket Platter', 'Slow-smoked brisket with sides.', 24.00),
-(20, 'Desserts', 'Peach Cobbler', 'Warm cobbler with vanilla ice cream.', 9.00);
+(16, 'Starters', 'Shawarma', 'Lebanese street-style sandwich.', 12.00),
+(16, 'Mains', 'Shawarma Platter', 'Assorted grilled meats.', 42.00),
+(16, 'Desserts', 'Tahini Halva', 'Lebanese dessert with honey.', 10.00),
+(17, 'Starters', 'Tzatziki', 'Greek yogurt with cucumber.', 8.00),
+(17, 'Mains', 'Moussaka', 'Greek baked eggplant with meat.', 22.00),
+(17, 'Desserts', 'Loukoumades', 'Greek honeycomb with cinnamon.', 9.00),
+(18, 'Starters', 'Ceviche', 'Peruvian seafood with lime.', 14.00),
+(18, 'Mains', 'Anticuchos', 'Peruvian skewers with spicy sauce.', 20.00),
+(18, 'Desserts', 'Pisco Sour', 'Peruvian sour cocktail.', 11.00),
+(19, 'Starters', 'Pierogi', 'Polish dumplings with sweet cheese.', 8.00),
+(19, 'Mains', 'Golabki', 'Beef-filled cabbage rolls.', 18.00),
+(19, 'Desserts', 'Panna Cotta', 'Italian cream cheese dessert.', 10.00),
+(20, 'Starters', 'Pulled Pork', 'Smoked pork shoulder with BBQ sauce.', 14.00),
+(20, 'Mains', 'Smoked Ribs', 'Slow-smoked pork ribs with coleslaw.', 22.00),
+(20, 'Desserts', 'Apple Pie', 'Classic American dessert.', 8.00);
 
 -- ============================================================
--- REVIEWS
+-- REVIEWS (11 records)
 -- ============================================================
 
 INSERT INTO reviews (restaurant_id, user_id, rating, comment) VALUES
@@ -225,7 +222,7 @@ INSERT INTO reviews (restaurant_id, user_id, rating, comment) VALUES
 (20, 2, 4, 'Smoky BBQ and generous portions. Great value.');
 
 -- ============================================================
--- RESERVATIONS
+-- RESERVATIONS (6 records)
 -- ============================================================
 
 INSERT INTO reservations (restaurant_id, user_id, reservation_date, reservation_time, party_size, status, notes) VALUES
@@ -237,22 +234,27 @@ INSERT INTO reservations (restaurant_id, user_id, reservation_date, reservation_
 (20, 4, '2026-06-28', '17:30:00', 6, 'approved', 'Birthday celebration');
 
 -- ============================================================
--- FAVOURITES
+-- FAVOURITES (10 records)
 -- ============================================================
 
 INSERT INTO favourites (user_id, restaurant_id) VALUES
-(2, 1), (2, 2), (2, 11), (2, 20),
-(3, 3), (3, 6), (3, 13),
-(4, 5), (4, 8), (4, 16);
+(2, 1), 
+(2, 2), 
+(2, 11), 
+(2, 20),
+(3, 3), 
+(3, 6), 
+(3, 13),
+(4, 5), 
+(4, 8), 
+(4, 16);
 
 -- ============================================================
--- SITE SETTINGS
+-- SITE SETTINGS (2 records)
 -- ============================================================
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('active_theme', 'classic'),
-('site_version', '1.0.0'),
-('reservations_enabled', '1'),
-('reviews_enabled', '1');
+('site_version', '2.0.0');
 
 SET FOREIGN_KEY_CHECKS = 1;

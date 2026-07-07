@@ -61,14 +61,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $showCancelConfirm = is_restaurant_reserved($userId, $restaurantId);
-$activeReservation = $showCancelConfirm
-    ? get_active_reservation_for_restaurant($userId, $restaurantId)
-    : null;
+$isApprovedReservation = false;
+if ($showCancelConfirm) {
+    $activeReservation = get_active_reservation_for_restaurant($userId, $restaurantId);
+    if ($activeReservation) {
+        $isApprovedReservation = is_restaurant_approved_reservation($userId, $restaurantId);
+    }
+}
 
 $pageTitle = $showCancelConfirm ? 'Cancel Reservation' : 'Reserve a Table';
-$pageDescription = $showCancelConfirm
-    ? 'Confirm cancellation of your reservation at ' . $restaurant['name'] . '.'
-    : 'Request a table reservation at ' . $restaurant['name'] . '.';
+$pageDescription = '';
+if ($showCancelConfirm) {
+    if (!$isApprovedReservation) {
+        $pageDescription = 'Confirm cancellation of your pending reservation at ' . $restaurant['name'] . '.';
+    } else {
+        $pageDescription = 'Cannot cancel an approved reservation by yourself. Please call us at ' . e(SITE_PHONE) . '.';
+    }
+} else {
+    $pageDescription = 'Request a table reservation at ' . $restaurant['name'] . '.';
+}
 $bodyClass = 'page-reservation-modal';
 
 $reservationDate = $reservationDate ?? '';
@@ -86,7 +97,7 @@ require_once __DIR__ . '/../includes/header.php';
             <h1 id="reservation-modal-title">Reservation Not Found</h1>
             <p class="modal-lead">We could not find an active reservation to cancel.</p>
             <a class="btn btn-secondary" href="<?= e($redirect) ?>">Back</a>
-        <?php elseif ($showCancelConfirm && $activeReservation): ?>
+        <?php elseif ($showCancelConfirm && $activeReservation && !$isApprovedReservation): ?>
             <h1 id="reservation-modal-title">Cancel Reservation?</h1>
             <p class="modal-lead">at <?= e($restaurant['name']) ?></p>
             <p>
@@ -106,6 +117,16 @@ require_once __DIR__ . '/../includes/header.php';
                     <a class="btn btn-secondary" href="<?= e($redirect) ?>">Keep Reservation</a>
                 </div>
             </form>
+        <?php elseif ($showCancelConfirm && $activeReservation && $isApprovedReservation): ?>
+            <h1 id="reservation-modal-title">Reservation Confirmed</h1>
+            <p class="modal-lead">at <?= e($restaurant['name']) ?></p>
+            <p>You have a confirmed reservation at <?= e($restaurant['name']) ?>. You cannot cancel it by yourself. Please call us at <?= e(SITE_PHONE) ?>.
+            <a class="btn btn-secondary" href="<?= e($redirect) ?>">Back</a>
+        <?php elseif ($showCancelConfirm && $activeReservation && $isApprovedReservation): ?>
+            <h1 id="reservation-modal-title">Reservation Has Been Approved</h1>
+            <p class="modal-lead">at <?= e($restaurant['name']) ?></p>
+            <p>You have an approved reservation at <?= e($restaurant['name']) ?>. You cannot cancel it by yourself. Please call us at <?= e(SITE_PHONE) ?>.
+            <a class="btn btn-secondary" href="<?= e($redirect) ?>">Back</a>
         <?php else: ?>
         <h1 id="reservation-modal-title">Reserve a Table</h1>
         <p class="modal-lead">at <?= e($restaurant['name']) ?></p>
@@ -113,6 +134,11 @@ require_once __DIR__ . '/../includes/header.php';
         <?php if ($error !== ''): ?>
             <div class="alert alert-error" role="alert"><?= e($error) ?></div>
         <?php endif; ?>
+
+        <?php
+        $contextHelpIntro = 'Learn how reservations work and how to read the live booking estimate.';
+        require __DIR__ . '/../includes/partials/context-help.php';
+        ?>
 
         <form class="auth-form reservation-form" method="post" action="reservation_toggle.php" novalidate>
             <input type="hidden" name="restaurant_id" value="<?= $restaurantId ?>">
@@ -151,6 +177,36 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endfor; ?>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="reservation_occasion">Occasion <span class="label-optional">(optional)</span></label>
+                <select id="reservation_occasion" name="reservation_occasion">
+                    <option value="">Regular dining</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="business">Business meal</option>
+                    <option value="celebration">Celebration</option>
+                </select>
+            </div>
+
+            <section class="quote-panel" aria-labelledby="reservation-estimate-title">
+                <h2 id="reservation-estimate-title">Reservation Estimate</h2>
+                <p class="form-help">This updates as you choose your party size, time, and occasion.</p>
+                <dl class="quote-summary" data-reservation-estimate>
+                    <div>
+                        <dt>Estimated deposit</dt>
+                        <dd data-reservation-deposit>$0.00</dd>
+                    </div>
+                    <div>
+                        <dt>Demand level</dt>
+                        <dd data-reservation-demand>Standard</dd>
+                    </div>
+                    <div>
+                        <dt>Booking note</dt>
+                        <dd data-reservation-note>No deposit is estimated for small parties.</dd>
+                    </div>
+                </dl>
+            </section>
 
             <div class="form-group">
                 <label for="notes">Special Requests <span class="label-optional">(optional)</span></label>

@@ -1,0 +1,10 @@
+Disallow: /admin/
+Disallow: /client/
+Disallow: /includes/
+Disallow: /monitor.php
+Disallow: /sitemap.php
+Disallow: /charts/
+Disallow: /schema/
+Allow: /assets/images/
+Allow: /assets/css/
+Allow: /assets/js/

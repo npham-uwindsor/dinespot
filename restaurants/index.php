@@ -32,6 +32,10 @@ require_once __DIR__ . '/../includes/header.php';
 
 <section class="page-content">
     <div class="container">
+        <?php
+        $contextHelpIntro = 'Learn how to browse the restaurant catalogue and open listing details.';
+        require __DIR__ . '/../includes/partials/context-help.php';
+        ?>
         <?php if ($dbError): ?>
             <div class="alert alert-error" role="alert"><?= e($dbError) ?></div>
         <?php elseif ($restaurants === []): ?>

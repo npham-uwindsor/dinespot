@@ -42,6 +42,10 @@ require_once __DIR__ . '/../includes/header.php';
         <?php require __DIR__ . '/_sidebar.php'; ?>
 
         <div class="client-main">
+            <?php
+            $contextHelpIntro = 'Learn how to request a table and understand reservation status.';
+            require __DIR__ . '/../includes/partials/context-help.php';
+            ?>
             <?php if ($success !== ''): ?>
                 <div class="alert alert-success" role="status"><?= e($success) ?></div>
             <?php endif; ?>
@@ -72,17 +76,20 @@ require_once __DIR__ . '/../includes/header.php';
                                 <button
                                     type="button"
                                     class="btn btn-secondary"
+                                    id="cancel-reservation-button"
                                     data-cancel-reservation
                                     data-reservation-id="<?= (int) $reservation['id'] ?>"
                                     data-restaurant-name="<?= e($reservation['restaurant_name']) ?>"
                                     data-reservation-date="<?= e(date('F j, Y', strtotime($reservation['reservation_date']))) ?>"
                                     data-reservation-time="<?= e(date('g:i A', strtotime($reservation['reservation_time']))) ?>"
                                     data-party-size="<?= (int) $reservation['party_size'] ?>"
-                                    data-redirect="reservations.php"
+                                    data-status="<?= e($reservation['status']) ?>"
+                                    data-redirect="<?= e(client_path('reservations.php')) ?>"
                                     data-form-action="cancel_reservation.php"
                                 >
                                     Cancel Reservation
                                 </button>
+                                <p data-cancel-reservation-message></p>
                             <?php endif; ?>
                         </article>
                     <?php endforeach; ?>

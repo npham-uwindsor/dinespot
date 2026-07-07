@@ -7,15 +7,8 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
-require_login($assetPrefix . 'client/login.php');
-
-if (!is_admin()) {
-    http_response_code(403);
-    exit('Access denied. You must be an admin to view Insights.');
-}
-
 $pageTitle = 'DineSpot Insights';
-$pageDescription = 'Explore restaurant and reservation trends across DineSpot.';
+$pageDescription = 'Explore restaurant cuisine trends, reservation activity, and top-rated listings on DineSpot.';
 $bodyClass = 'page-charts';
 
 $cuisineData = [];
@@ -33,6 +26,7 @@ try {
     $dbError = 'Unable to load chart data.';
 }
 
+// JavaScript library for creating charts loaded via CDN (Traditional way)
 $extraHead = '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>';
 
 require_once __DIR__ . '/../includes/header.php';
@@ -50,6 +44,7 @@ require_once __DIR__ . '/../includes/header.php';
         <?php if ($dbError): ?>
             <div class="alert alert-error" role="alert"><?= e($dbError) ?></div>
         <?php else: ?>
+            <!-- Chart.js canvases; data passed via window.dineSpotCharts below -->
             <div class="charts-grid">
                 <div class="content-card chart-card">
                     <h2>Restaurants by Cuisine</h2>

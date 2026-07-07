@@ -1,4 +1,12 @@
 <?php
+/*
+    Author: Tuong Nguyen Pham
+    Student ID: 110192780
+    Date: TBD
+    COMP 3340 - Web Development
+    Couse Project
+    HTML5, CSS, JS, PHP, MySQL
+*/
     require_once __DIR__ . '/db.php';
     require_once __DIR__ . '/config.php';
 
@@ -54,7 +62,7 @@
         }
     }
 
-    function redirect_if_logged_in(string $redirectTo): void {
+    function redirect_if_logged_in(string $redirectTo = '../index.php'): void {
         if (is_logged_in()) {
             header('Location: ' . $redirectTo);
             exit;
@@ -76,6 +84,9 @@
     function logout_user(): void {
         $_SESSION = [];
         session_destroy();
+        
+        // clear other cookies
+        setcookie('dinespot_theme', '', time() - 3600, '/');
     }
 
 
@@ -134,6 +145,12 @@
         return $stmt->rowCount() > 0;
     }
 
+    function update_user_status(int $id, string $status): bool {
+        $stmt = db()->prepare('UPDATE users SET status = :status WHERE id = :id');
+        $stmt->execute(['status' => $status, 'id' => $id]);
+        return $stmt->rowCount() > 0;
+    }
+
     function update_user_password(int $id, string $password): bool {
         $stmt = db()->prepare('UPDATE users SET password_hash = :password_hash WHERE id = :id');
         $stmt->execute([
@@ -177,18 +194,15 @@
         return $user ? $user['status'] === 'active' : false;
     }
 
-    function authenticate(string $email, string $password): ?array {
+    function authenticate(string $email, string $password): array {
         $user = get_user_by_email($email);
-        if (!$user) {
-            return null;
+        if (!$user || !verify_password($password, $user['password_hash'])) {
+            return ['error' => 'Invalid email or password.'];
         }
-        if (!verify_password($password, $user['password_hash'])) {
-            return null;
+        if (!is_account_active((int) $user['id'])) {
+            return ['error' => 'Your account has been suspended. Please contact support at ' . SITE_SUPPORT_EMAIL . ' during support hours (' . SITE_SUPPORT_HOURS . ').'];
         }
-        if (!is_account_active($user['id'])) {
-            return null;
-        }
-        return $user;
+        return ['user' => $user];
     }
 
 

@@ -1,0 +1,40 @@
+/* Forest theme — emerald & amber
+ * Overrides :root colour tokens from style.css. Loaded alongside the base stylesheet.
+ */
+
+/* Brand & accent colours */
+:root {
+    --color-primary: #2d6a4f;
+    --color-primary-dark: #1b4332;
+    --color-accent: #e9c46a;
+
+    /* Surfaces & text */
+    --color-bg: #f4f7f4;
+    --color-surface: #ffffff;
+    --color-text: #1b2e24;
+    --color-muted: #4f6358;
+    --color-border: #d8e3dc;
+    --color-accent-soft: #f7f0d8;
+    --color-favourite: #f4d35e;
+
+    /* Header, hero gradient, footer */
+    --color-header-bg: rgba(255, 255, 255, 0.95);
+    --color-hero-start: #ffffff;
+    --color-hero-end: #edf4ef;
+
+    --color-footer-bg: #1b4332;
+    --color-footer-text: #edf4ef;
+    --color-footer-muted: #a8c5b4;
+    --color-footer-border: rgba(255, 255, 255, 0.12);
+
+    /* Feedback states & focus ring */
+    --color-success: #2d6a4f;
+    --color-success-bg: #e8f5ef;
+    --color-error: #9b2226;
+    --color-error-bg: #fdecea;
+    --color-focus-ring: rgba(45, 106, 79, 0.25);
+
+    /* Elevation shadows */
+    --shadow-sm: 0 1px 3px rgba(27, 67, 50, 0.08);
+    --shadow-md: 0 8px 24px rgba(27, 67, 50, 0.1);
+}

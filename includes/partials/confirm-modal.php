@@ -1,3 +1,4 @@
+<!-- Reusable confirmation dialog for destructive actions (cancel, delete) -->
 <div
     id="confirm-modal"
     class="modal-overlay confirm-modal"

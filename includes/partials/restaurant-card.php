@@ -5,6 +5,7 @@
 
 $viewUrl = ($assetPrefix ?? '') . 'restaurants/view.php?id=' . (int) $restaurant['id'];
 ?>
+<!-- Restaurant card partial — used in listing grids -->
 <article class="restaurant-card">
     <a class="restaurant-card-image" href="<?= e($viewUrl) ?>">
         <img

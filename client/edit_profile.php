@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
     } elseif ($phone !== '' && !preg_match('/^\d{10}$/', $phone)) {
-        $error = 'Please enter a valid 10-digit phone number.';
+        $error = 'Please enter a valid phone number in the format (xxx) xxx-xxxx.';
     } else {
         $existing = get_user_by_email($email);
         if ($existing && (int) $existing['id'] !== (int) $user['id']) {
@@ -90,7 +90,7 @@ require_once __DIR__ . '/../includes/header.php';
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" value="<?= e($phone) ?>">
+                        <input type="tel" id="phone" name="phone" value="<?= e($phone) ?>" placeholder="(xxx) xxx-xxxx">
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Save Changes</button>

@@ -43,6 +43,10 @@ require_once __DIR__ . '/../includes/header.php';
         <?php require __DIR__ . '/_sidebar.php'; ?>
 
         <div class="client-main">
+            <?php
+            $contextHelpIntro = 'Learn how to manage your profile, favourites, and reviews.';
+            require __DIR__ . '/../includes/partials/context-help.php';
+            ?>
             <div class="content-card">
                 <?php if ($success !== ''): ?>
                     <div class="alert alert-success" role="status"><?= e($success) ?></div>

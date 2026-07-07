@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
             </p>
             <p>
                 <strong>Support Hours</strong>
-                Monday – Friday, 9:00 AM – 5:00 PM EST
+                Monday - Saturday: <?= e(SITE_SUPPORT_HOURS) ?>
             </p>
             <p>
                 <strong>Reservation Issues</strong>
