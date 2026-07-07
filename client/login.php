@@ -77,6 +77,16 @@ require_once __DIR__ . '/../includes/header.php';
                         required
                     >
                 </div>
+                
+                <!-- Forgot Password -->
+                <div class="form-group">
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <!-- Message for forgot password -->
+                <div class="form-group">
+                    <p class="forgot-password-message"></p>
+                </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
             </form>

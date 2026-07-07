@@ -370,4 +370,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+    // Handle forgot password
+    var forgotPassword = document.querySelector('.forgot-password');
+    var forgotPasswordMessage = document.querySelector('.forgot-password-message');
+    if (forgotPassword) {
+        forgotPassword.addEventListener('click', function () {
+            forgotPasswordMessage.textContent = 'Forgot password? Please email us at support@dinespot.com or call us at (519) 555-0142';
+            forgotPasswordMessage.style.display = 'block';
+            forgotPasswordMessage.style.color = 'red';
+            forgotPasswordMessage.style.fontSize = '14px';
+            forgotPasswordMessage.style.fontWeight = 'bold';
+            forgotPasswordMessage.style.textAlign = 'center';
+            forgotPasswordMessage.style.margin = '10px 0';
+        });
+    }
 });
