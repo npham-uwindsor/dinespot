@@ -13,11 +13,11 @@ if (!$reservation) {
     exit;
 }
 
-if ($reservation['status'] !== 'pending') {
-    header('Location: list.php?error=Only pending reservations can be rejected.');
+if ($reservation['status'] !== 'approved') {
+    header('Location: list.php?error=Only approved reservations can be cancelled.');
     exit;
 }
 
-update_reservation_status_admin($id, 'rejected');
-header('Location: list.php?success=Reservation has been rejected.');
+update_reservation_status_admin($id, 'cancelled');
+header('Location: list.php?success=Reservation has been cancelled.');
 exit;

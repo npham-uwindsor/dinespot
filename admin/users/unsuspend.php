@@ -13,7 +13,8 @@ if (!$user) {
     header('Location: list.php?error=User not found.');
     exit;
 }
-
-update_user_status($id, 'suspended');
-header('Location: list.php?success=User '. $id .' has been suspended.');
-exit;
+else {
+    update_user_status($id, 'active');
+    header('Location: list.php?success=User '. $id .' has been restored to active status.');
+    exit;
+}

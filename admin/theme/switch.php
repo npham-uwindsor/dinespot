@@ -7,11 +7,7 @@ $themes = array_keys(get_available_themes());
 $theme = $_GET['theme'] ?? '';
 
 if (in_array($theme, $themes, true)) {
-    setcookie('dinespot_theme', $theme, [
-        'expires' => time() + 60 * 60 * 24 * 365,
-        'path' => '/',
-        'samesite' => 'Lax',
-    ]);
+    set_theme_cookie($theme);
 }
 
 $redirect = $_GET['redirect'] ?? '/';
