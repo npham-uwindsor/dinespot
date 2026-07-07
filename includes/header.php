@@ -18,7 +18,6 @@ $GLOBALS['assetPrefix'] = $assetPrefix;
     <!--
     Author: Tuong Nguyen Pham
     Student ID: 110192780
-    Date: TBD
     COMP 3340 - Web Development
     Couse Project
     HTML5, CSS, JS, PHP, MySQL
