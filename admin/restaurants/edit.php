@@ -57,14 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $is_active = isset($_POST['is_active']) ? 1 : 0;
     $image_path = $restaurant['image_path'] ?? '';
 
-    if ($name === '' || $cuisine === '' || $city === '' || $province === '' || $description === '') {
-        $error = 'Name, cuisine, city, province, and description are required.';
+    if ($name === '' || $cuisine === '' || $city === '' || $province === '' || $description === '' || $address === '') {
+        $error = 'Name, cuisine, city, province, description, and address are required.';
     } elseif ($price_range < 1 || $price_range > 4) {
         $error = 'Please select a valid price range.';
     } else {
         $hasNewImage = isset($_FILES['image']) && ($_FILES['image']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
         if ($hasNewImage) {
-            $image_result = image_upload('image', 'restaurants', true, $image_path);
+            $image_result = image_upload('image', 'restaurants', $image_path);
             if (is_array($image_result) && isset($image_result['error'])) {
                 $error = $image_result['error'];
             } else {
@@ -126,38 +126,37 @@ require_once __DIR__ . '/../../includes/header.php';
                 <h2>Restaurant Details</h2>
                 <form class="auth-form" method="post" action="edit.php?id=<?= (int) $id ?>" enctype="multipart/form-data" novalidate>
                     <div class="form-group">
-                        <label>Current image</label>
-                        <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" alt="<?= e($restaurant['name']) ?>" style="max-width: 300px; height: auto;">
+                        <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" alt="<?= e($name) ?>" style="max-width: 300px; height: auto;">
                         <p class="admin-edit-restaurant-image-name"><?= e(basename($restaurant['image_path'] ?? 'File not found')) ?></p>
-                        <label for="image">Update image</label>
+                        <label for="image">Upload new image</label>
                         <input type="file" name="image" id="image" accept="image/jpeg, image/png, image/jpg">
                     </div>
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Name*</label>
                         <input type="text" id="name" name="name" value="<?= e($name) ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="cuisine">Cuisine</label>
+                        <label for="cuisine">Cuisine*</label>
                         <input type="text" id="cuisine" name="cuisine" value="<?= e($cuisine) ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" value="<?= e($city) ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Province</label>
-                        <input type="text" id="province" name="province" value="<?= e($province) ?>" maxlength="10" placeholder="ON" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4" required><?= e($description) ?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address">Address*</label>
                         <input type="text" id="address" name="address" value="<?= e($address) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="price_range">Price Range</label>
+                        <label for="city">City*</label>
+                        <input type="text" id="city" name="city" value="<?= e($city) ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province*</label>
+                        <input type="text" id="province" name="province" value="<?= e($province) ?>" maxlength="10" placeholder="ON" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description*</label>
+                        <textarea id="description" name="description" rows="4" required><?= e($description) ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="price_range">Price Range*</label>
                         <select id="price_range" name="price_range" required>
                             <?php for ($i = 1; $i <= 4; $i++): ?>
                                 <option value="<?= $i ?>"<?= $price_range === $i ? ' selected' : '' ?>><?= e(price_range_label($i)) ?></option>

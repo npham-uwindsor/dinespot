@@ -87,7 +87,7 @@ All clients password is `client123`.
 The site supports 3 colour themes that admins can switch:
 
 - **Classic** — burgundy/gold
-- **Midnight** — teal/coral
+- **Refresh** — teal/coral
 - **Forest** — green/amber
 
 Themes are stored in `site_settings` and loaded in `includes/header.php`. Users can also preview a theme before saving it.
@@ -168,7 +168,7 @@ View all reviews. Delete ones that break the guidelines (spam, abusive content, 
 
 ### Theme Settings (`admin/theme/settings.php`)
 
-Pick the default site theme (Classic, Midnight, or Forest). You can preview a theme before saving. The choice applies site-wide for visitors who have not picked their own cookie override.
+Pick the default site theme (Classic, Refresh, or Forest). You can preview a theme before saving. The choice applies site-wide for visitors who have not picked their own cookie override.
 
 ### System Monitoring (`monitor.php`)
 

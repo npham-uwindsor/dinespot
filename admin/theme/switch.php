@@ -7,9 +7,9 @@ $themes = array_keys(get_available_themes());
 $theme = $_GET['theme'] ?? '';
 
 if (in_array($theme, $themes, true)) {
-    set_theme_cookie($theme);
+    set_theme_cookie($theme, true);
 }
 
 $redirect = $_GET['redirect'] ?? '/';
-header('Location: ' . $redirect);
+header('Location: ' . $redirect . '?updated=Preview theme applied. It will be available for 5 minutes.');
 exit;

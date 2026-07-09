@@ -18,7 +18,7 @@ $themes = get_available_themes();
 $activeTheme = get_site_theme();
 $previewTheme = get_active_theme();
 $error = '';
-$success = isset($_GET['updated']) ? 'Site theme updated successfully.' : '';
+$success = isset($_GET['updated']) ? $_GET['updated'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedTheme = $_POST['active_theme'] ?? '';
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Unable to save the selected theme.';
     } else {
         set_theme_cookie($selectedTheme);
-        header('Location: settings.php?updated=1');
+        header('Location: settings.php?updated=Site theme updated successfully.');
         exit;
     }
 

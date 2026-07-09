@@ -45,7 +45,9 @@ require_once __DIR__ . '/../includes/header.php';
         <?php else: ?>
             <div class="restaurant-grid">
                 <?php foreach ($restaurants as $restaurant): ?>
-                    <?php include __DIR__ . '/../includes/partials/restaurant-card.php'; ?>
+                    <?php if ($restaurant['is_active'] == 1): ?>
+                        <?php include __DIR__ . '/../includes/partials/restaurant-card.php'; ?>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>

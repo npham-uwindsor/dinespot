@@ -163,8 +163,8 @@ function get_available_themes(): array
             'accent' => '#c9a962',
             'background' => '#faf8f5',
         ],
-        'midnight' => [
-            'label' => 'Midnight',
+        'refresh' => [
+            'label' => 'Refresh',
             'description' => 'Teal and coral palette with a fresh coastal mood.',
             'primary' => '#0d5c63',
             'accent' => '#f4a261',
@@ -263,7 +263,7 @@ function get_active_theme(): string
 {
     $themes = array_keys(get_available_themes());
 
-    if (isset($_COOKIE['dinespot_theme']) && in_array($_COOKIE['dinespot_theme'], $themes, true)) {
+    if (isset($_COOKIE['dinespot_theme']) && in_array($_COOKIE['dinespot_theme'], $themes, true)) { // this appears to admin only
         return $_COOKIE['dinespot_theme'];
     }
 
@@ -271,7 +271,7 @@ function get_active_theme(): string
 }
 
 // set the theme cookie
-function set_theme_cookie(string $theme): void
+function set_theme_cookie(string $theme, bool $isPreview = false): void
 {
     $themes = array_keys(get_available_themes());
 
@@ -279,12 +279,22 @@ function set_theme_cookie(string $theme): void
         return;
     }
 
+    if ($isPreview) {
+        setcookie('dinespot_theme', $theme, [
+            'expires' => time() + 60 * 5, // 5 minutes
+            'path' => '/',
+            'samesite' => 'Lax',
+        ]);
+        $_COOKIE['dinespot_theme'] = $theme;
+        return;
+    }
     setcookie('dinespot_theme', $theme, [
         'expires' => time() + 60 * 60 * 24 * 365,
         'path' => '/',
         'samesite' => 'Lax',
     ]);
     $_COOKIE['dinespot_theme'] = $theme;
+    return;
 }
 
 function theme_stylesheet(): string
@@ -295,6 +305,8 @@ function theme_stylesheet(): string
 function theme_switch_url(string $theme): string
 {
     $redirect = $_SERVER['REQUEST_URI'] ?? (asset_prefix() . 'index.php');
+
+    $redirect = preg_replace('/\?.*$/', '', $redirect);
 
     return admin_path('theme/switch.php') . '?theme=' . urlencode($theme) . '&redirect=' . urlencode($redirect);
 }
@@ -907,7 +919,7 @@ function delete_review_by_id_admin(int $id): bool
 }
 
 
-function image_upload($inputName, $feature = null, $update = false, $currentImagePath = '') {
+function image_upload($inputName, $feature = null, $currentImagePath = '') {
     $returnPath = null;
     if ($feature === null) {
         $returnPath = 'assets/images/';
@@ -935,14 +947,14 @@ function image_upload($inputName, $feature = null, $update = false, $currentImag
     if ($file['size'] > $maxFileSize) {
         return ['error' => 'File size exceeds the maximum allowed size'];
     }
-    // check if file already exists only for create
+    // check if file already exists
     $destination = $uploadDir . $fileName;
-    if (!$update) {
+    if ($currentImagePath === '') { // for create
         if (file_exists($destination) && $fileName !== "placeholder.jpg") {
             return ['error' => 'File already exists'];
         }
     }
-    else {
+    else { // for update
         if (basename($currentImagePath) !== $fileName && basename($currentImagePath) !== "placeholder.jpg") {
             if (file_exists($destination) && $fileName !== "placeholder.jpg") {
                 return ['error' => 'File already exists. Please update the new image with the same name as the current image to overwrite or a different name which is not existing.'];

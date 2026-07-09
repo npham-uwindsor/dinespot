@@ -97,35 +97,35 @@ require_once __DIR__ . '/../../includes/header.php';
                 <h2>Restaurant Details</h2>
                 <form class="auth-form" method="post" action="add.php" enctype="multipart/form-data" novalidate>
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Name*</label>
                         <input type="text" id="name" name="name" value="<?= e($name) ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="cuisine">Cuisine</label>
+                        <label for="cuisine">Cuisine*</label>
                         <input type="text" id="cuisine" name="cuisine" value="<?= e($cuisine) ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" value="<?= e($city) ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Province</label>
-                        <input type="text" id="province" name="province" value="<?= e($province) ?>" maxlength="10" placeholder="ON" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4" required><?= e($description) ?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address">Address*</label>
                         <input type="text" id="address" name="address" value="<?= e($address) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="image">Image</label>
+                        <label for="city">City*</label>
+                        <input type="text" id="city" name="city" value="<?= e($city) ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province*</label>
+                        <input type="text" id="province" name="province" value="<?= e($province) ?>" maxlength="10" placeholder="ON" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description*</label>
+                        <textarea id="description" name="description" rows="4" required><?= e($description) ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image*</label>
                         <input type="file" id="image" name="image" accept="image/jpeg, image/png, image/jpg" required>
                     </div>
                     <div class="form-group">
-                        <label for="price_range">Price Range</label>
+                        <label for="price_range">Price Range*</label>
                         <select id="price_range" name="price_range" required>
                             <?php for ($i = 1; $i <= 4; $i++): ?>
                                 <option value="<?= $i ?>"<?= $price_range === $i ? ' selected' : '' ?>><?= e(price_range_label($i)) ?></option>
