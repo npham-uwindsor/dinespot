@@ -51,7 +51,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container">
         <div class="stats-row">
             <div class="stat-box">
-                <strong>20+</strong>
+                <strong>10+</strong>
                 <span>Cuisine categories</span>
             </div>
             <div class="stat-box">
@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
                 <span>Restaurant coverage</span>
             </div>
             <div class="stat-box">
-                <strong>20+ accounts</strong>
+                <strong>3+ users</strong>
                 <span>Reviews, reservations &amp; favourites</span>
             </div>
         </div>

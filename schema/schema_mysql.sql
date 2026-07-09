@@ -1,4 +1,4 @@
--- Uncomment the following lines to create the database and tables
+-- Uncomment the following lines to drop the existing database and create the new one
 -- SET FOREIGN_KEY_CHECKS = 0;
 -- DROP DATABASE IF EXISTS dinespot;
 -- CREATE DATABASE dinespot CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -35,6 +35,7 @@ $city = $restaurant['city'];
 $province = $restaurant['province'];
 $description = $restaurant['description'];
 $address = $restaurant['address'] ?? '';
+$image_path = $restaurant['image_path'] ?? '';
 $price_range = (int) $restaurant['price_range'];
 $is_active = (int) $restaurant['is_active'];
 $menuGrouped = get_menu_items_grouped($id);
@@ -54,29 +55,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = trim($_POST['address'] ?? '');
     $price_range = (int) ($_POST['price_range'] ?? 2);
     $is_active = isset($_POST['is_active']) ? 1 : 0;
+    $image_path = $restaurant['image_path'] ?? '';
 
     if ($name === '' || $cuisine === '' || $city === '' || $province === '' || $description === '') {
         $error = 'Name, cuisine, city, province, and description are required.';
     } elseif ($price_range < 1 || $price_range > 4) {
         $error = 'Please select a valid price range.';
     } else {
-        $updated = update_restaurant($id, [
-            'name' => $name,
-            'cuisine' => $cuisine,
-            'city' => $city,
-            'province' => $province,
-            'description' => $description,
-            'address' => $address,
-            'price_range' => $price_range,
-            'is_active' => $is_active,
-        ]);
-
-        if ($updated) {
-            header('Location: list.php?success=Restaurant has been updated.');
-            exit;
+        $hasNewImage = isset($_FILES['image']) && ($_FILES['image']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
+        if ($hasNewImage) {
+            $image_result = image_upload('image', 'restaurants', true, $image_path);
+            if (is_array($image_result) && isset($image_result['error'])) {
+                $error = $image_result['error'];
+            } else {
+                $image_path = $image_result['path'] ?? $image_path;
+            }
         }
 
-        $error = 'Failed to update restaurant. Please try again.';
+        if ($error === '') {
+            $updated = update_restaurant($id, [
+                'name' => $name,
+                'cuisine' => $cuisine,
+                'city' => $city,
+                'province' => $province,
+                'description' => $description,
+                'address' => $address,
+                'image_path' => $image_path,
+                'price_range' => $price_range,
+                'is_active' => $is_active,
+            ]);
+
+            if ($updated) {
+                header('Location: edit.php?id=' . $id . '&success=Restaurant has been updated.');
+                exit;
+            }
+
+            $error = 'Failed to update restaurant. Please try again.';
+        }
     }
 }
 
@@ -109,7 +124,14 @@ require_once __DIR__ . '/../../includes/header.php';
                 ?>
 
                 <h2>Restaurant Details</h2>
-                <form class="auth-form" method="post" action="edit.php?id=<?= (int) $id ?>" novalidate>
+                <form class="auth-form" method="post" action="edit.php?id=<?= (int) $id ?>" enctype="multipart/form-data" novalidate>
+                    <div class="form-group">
+                        <label>Current image</label>
+                        <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" alt="<?= e($restaurant['name']) ?>" style="max-width: 300px; height: auto;">
+                        <p class="admin-edit-restaurant-image-name"><?= e(basename($restaurant['image_path'] ?? 'File not found')) ?></p>
+                        <label for="image">Update image</label>
+                        <input type="file" name="image" id="image" accept="image/jpeg, image/png, image/jpg">
+                    </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" value="<?= e($name) ?>" required>

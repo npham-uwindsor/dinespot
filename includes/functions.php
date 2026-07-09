@@ -43,7 +43,7 @@ function get_help_pages(): array
         'browsing.php' => 'Browsing Restaurants',
         'reservations.php' => 'Reservations',
         'account.php' => 'Your Account',
-        'updating-content.php' => 'Updating Content',
+        'updating-content.php' => 'Updating Content (Admin Only)',
     ];
 }
 
@@ -788,27 +788,38 @@ function create_restaurant(array $data): bool
 function update_restaurant(int $id, array $data): bool
 {
     require_once __DIR__ . '/db.php';
+    try {
+        $stmt = db()->prepare(
+            'UPDATE restaurants
+            SET name = :name, cuisine = :cuisine, city = :city, province = :province,
+                description = :description, address = :address, image_path = :image_path, price_range = :price_range,
+                is_active = :is_active
+            WHERE id = :id'
+        );
+        $stmt->execute([
+            'id' => $id,
+            'name' => $data['name'],
+            'cuisine' => $data['cuisine'],
+            'city' => $data['city'],
+            'province' => $data['province'],
+            'description' => $data['description'],
+            'address' => $data['address'] !== '' ? $data['address'] : null,
+            'image_path' => $data['image_path'] !== '' ? $data['image_path'] : null,
+            'price_range' => $data['price_range'],
+            'is_active' => $data['is_active'] ?? 1,
+        ]);
+    }
+    catch (PDOException $e) {
+        echo $e->getMessage();
+        exit;
+    }
+    if ($stmt->rowCount() > 0) {
+        return true;
+    }
+    $check = db()->prepare('SELECT 1 FROM restaurants WHERE id = :id LIMIT 1');
+    $check->execute(['id' => $id]);
 
-    $stmt = db()->prepare(
-        'UPDATE restaurants
-         SET name = :name, cuisine = :cuisine, city = :city, province = :province,
-             description = :description, address = :address, price_range = :price_range,
-             is_active = :is_active
-         WHERE id = :id'
-    );
-    $stmt->execute([
-        'id' => $id,
-        'name' => $data['name'],
-        'cuisine' => $data['cuisine'],
-        'city' => $data['city'],
-        'province' => $data['province'],
-        'description' => $data['description'],
-        'address' => $data['address'] !== '' ? $data['address'] : null,
-        'price_range' => $data['price_range'],
-        'is_active' => $data['is_active'] ?? 1,
-    ]);
-
-    return $stmt->rowCount() > 0;
+    return (bool) $check->fetchColumn();
 }
 
 function update_restaurant_active(int $id, int $isActive): bool
@@ -896,7 +907,7 @@ function delete_review_by_id_admin(int $id): bool
 }
 
 
-function image_upload($inputName, $feature = null) {
+function image_upload($inputName, $feature = null, $update = false, $currentImagePath = '') {
     $returnPath = null;
     if ($feature === null) {
         $returnPath = 'assets/images/';
@@ -924,10 +935,25 @@ function image_upload($inputName, $feature = null) {
     if ($file['size'] > $maxFileSize) {
         return ['error' => 'File size exceeds the maximum allowed size'];
     }
-    // check if file already exists
+    // check if file already exists only for create
     $destination = $uploadDir . $fileName;
-    if (file_exists($destination)) {
-        return ['error' => 'File already exists'];
+    if (!$update) {
+        if (file_exists($destination) && $fileName !== "placeholder.jpg") {
+            return ['error' => 'File already exists'];
+        }
+    }
+    else {
+        if (basename($currentImagePath) !== $fileName && basename($currentImagePath) !== "placeholder.jpg") {
+            if (file_exists($destination) && $fileName !== "placeholder.jpg") {
+                return ['error' => 'File already exists. Please update the new image with the same name as the current image to overwrite or a different name which is not existing.'];
+            }
+        }
+    }
+    // delete current image if it exists
+    if ($currentImagePath !== '' && basename($currentImagePath) !== "placeholder.jpg") {
+        if (file_exists($uploadDir . basename($currentImagePath))) {
+            unlink($uploadDir . basename($currentImagePath));
+        }
     }
     // move file to destination
     if (move_uploaded_file($file['tmp_name'], $destination)) {

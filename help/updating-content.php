@@ -42,7 +42,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <p>Open <a href="<?= e(admin_path('restaurants/list.php')) ?>">Manage Restaurants</a>, choose a listing, and update its details or menu items.</p>
 
                 <h2>Update restaurant images</h2>
-                <p>When adding a restaurant through the admin form, the file is uploaded automatically. To replace an image manually, upload a new file with the same filename or edit the restaurant and upload a new photo.</p>
+                <p>When adding a restaurant through the admin form, the file is uploaded automatically. To replace an image, upload a new file with the same filename to overwrite the current one or upload a new photo with a different name which is not existing.</p>
 
                 <h2>Change the site theme</h2>
                 <p>Admins can switch between Classic, Midnight, and Forest themes from <a href="<?= e(admin_path('theme/settings.php')) ?>">Theme Settings</a>. Preview a theme before saving it as the site default.</p>

@@ -13,6 +13,8 @@ $helpNavItems = get_help_pages();
     <nav class="client-sidebar-nav">
         <ul>
             <?php foreach ($helpNavItems as $file => $label): ?>
+                <?php if ($file === 'updating-content.php' && !is_admin()): continue; ?>
+                <?php endif; ?>
                 <li>
                     <a
                         href="<?= e($file) ?>"

@@ -41,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($image === null) {
         $error = 'Image is required.';
     } else {
-        $imageResult = image_upload('image', 'restaurants');
-        if (is_array($imageResult) && isset($imageResult['error'])) {
-            $error = $imageResult['error'];
+        $image_result = image_upload('image', 'restaurants');
+        if (is_array($image_result) && isset($image_result['error'])) {
+            $error = $image_result['error'];
         } else {
-            $image_path = $imageResult['path'] ?? null;
+            $image_path = $image_result['path'] ?? null;
         }
     }
     if ($error === '' && $image_path !== null) {
