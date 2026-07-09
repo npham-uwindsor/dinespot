@@ -279,11 +279,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('[data-cancel-reservation]').forEach(function (button) {
         button.addEventListener('click', function () {
-            if (button.dataset.status == 'approved') {
-                document.querySelector('[data-cancel-reservation-message]').textContent = 'You have an approved reservation at ' + button.dataset.restaurantName + '. You cannot cancel it by yourself. Please call us at (519) 555-0142.';
-                document.querySelector('[data-cancel-reservation-message]').style.display = 'block';
-                document.querySelector('[data-cancel-reservation-message]').style.color = 'red';
-                document.querySelector('#cancel-reservation-button').style.display = 'none';
+            // Find the exact reservation card element that button has been clicked on
+            var reservationCard = button.closest('.client-list-item, .content-card');
+
+            // If the reservation is approved, show the message and hide the button
+            if (button.dataset.status === 'approved') {
+                var messageEl = reservationCard
+                    ? reservationCard.querySelector('[data-cancel-reservation-message]')
+                    : document.querySelector('[data-cancel-reservation-message]');
+
+                if (messageEl) {
+                    messageEl.textContent = 'You have an approved reservation at ' + button.dataset.restaurantName + '. You cannot cancel it by yourself. Please call us at (519) 555-0142.';
+                    messageEl.style.display = 'block';
+                    messageEl.style.color = 'red';
+                }
+
+                button.style.display = 'none';
                 return;
             }
             openConfirmModal({

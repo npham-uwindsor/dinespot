@@ -76,7 +76,6 @@ require_once __DIR__ . '/../includes/header.php';
                                 <button
                                     type="button"
                                     class="btn btn-secondary"
-                                    id="cancel-reservation-button"
                                     data-cancel-reservation
                                     data-reservation-id="<?= (int) $reservation['id'] ?>"
                                     data-restaurant-name="<?= e($reservation['restaurant_name']) ?>"
