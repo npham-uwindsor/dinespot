@@ -1734,10 +1734,11 @@ body.modal-open {
 }
 
 .review-item {
-    padding: 1rem;
+    padding: 1.75rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    background: var(--color-accent-soft);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
 }
 
 .review-item-header {
@@ -1749,7 +1750,16 @@ body.modal-open {
 
 .review-item p {
     margin: 0;
-    color: var(--color-muted);
+    color: black;
+}
+
+.review-item-title a {
+    text-decoration: none;
+    color: black;
+}
+
+.review-item-title a:hover {
+    color: var(--color-primary);
 }
 
 /* --- Responsive breakpoints --- */

@@ -58,17 +58,15 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php foreach ($reviews as $review): ?>
                         <li class="review-item">
                             <div class="review-item-header">
-                                <strong>
-                                    <a href="<?= e($assetPrefix) ?>restaurants/view.php?id=<?= (int) $review['restaurant_id'] ?>">
-                                        <?= e($review['restaurant_name']) ?>
-                                    </a>
-                                </strong>
+                                <h2 class="review-item-title"><a href="<?= e($assetPrefix) ?>restaurants/view.php?id=<?= (int) $review['restaurant_id'] ?>">
+                                    <?= e($review['restaurant_name']) ?>
+                                </a></h2>
                                 <span><?= (int) $review['rating'] ?> ★</span>
                             </div>
                             <p><?= e($review['comment']) ?></p>
                             <p class="review-date"><?= e(date('F j, Y', strtotime($review['created_at']))) ?></p>
                             <div class="form-actions">
-                                <a class="btn btn-secondary" href="edit_review.php?id=<?= (int) $review['id'] ?>">Edit Review</a>
+                                <a class="btn btn-secondary" href="edit_review.php?id=<?= (int) $review['id'] ?>">Edit</a>
                                 <button
                                     type="button"
                                     class="btn btn-secondary"
@@ -78,7 +76,7 @@ require_once __DIR__ . '/../includes/header.php';
                                     data-redirect="my_reviews.php"
                                     data-form-action="delete_review.php"
                                 >
-                                    Delete Review
+                                    Delete
                                 </button>
                             </div>
                         </li>
