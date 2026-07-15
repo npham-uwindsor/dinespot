@@ -46,15 +46,17 @@
     /*
     2. Page guards
     */
-    function require_login(string $redirectTo = '/client/login.php'): void {
+    function require_login(string $redirectTo = '../client/login.php'): void {
         if (!is_logged_in()) {
-            header('Location: ' . $redirectTo . '?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+            header('Location: ' . $redirectTo . '?redirect=' . urlencode($_SERVER['REQUEST_URI'] ?? ''));
             exit;
         }
     }
 
     function require_admin(): void {
-        require_login();
+        // Relative to each page's $assetPrefix (../ or ../../) — works with or without /dinespot
+        $login = ($GLOBALS['assetPrefix'] ?? '../') . 'client/login.php';
+        require_login($login);
         if (!is_admin()) {
             http_response_code(403);
             exit("Access denied. You must be an admin to access this page.");

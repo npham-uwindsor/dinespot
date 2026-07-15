@@ -10,6 +10,8 @@ if (in_array($theme, $themes, true)) {
     set_theme_cookie($theme, true);
 }
 
-$redirect = $_GET['redirect'] ?? '/';
-header('Location: ' . $redirect . '?updated=Preview theme applied. It will be available for 5 minutes.');
+// Relative default (this file is in admin/theme/) — works with or without /dinespot
+$redirect = $_GET['redirect'] ?? '../../index.php';
+$separator = str_contains($redirect, '?') ? '&' : '?';
+header('Location: ' . $redirect . $separator . 'updated=Preview theme applied. It will be available for 5 minutes.');
 exit;
