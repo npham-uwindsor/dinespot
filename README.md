@@ -7,6 +7,8 @@ DineSpot is a restaurant discovery website where users can browse Canadian resta
 
 **Repository:** https://github.com/npham-uwindsor/dinespot
 
+**Live URL:** https://pham39.myweb.cs.uwindsor.ca/dinespot
+
 ---
 
 ## What you need installed
