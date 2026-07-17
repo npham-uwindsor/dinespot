@@ -31,7 +31,6 @@ require_once __DIR__ . '/includes/header.php';
                     <li><a href="<?= e(help_path('browsing.php')) ?>">Help: Browsing</a></li>
                     <li><a href="<?= e(help_path('reservations.php')) ?>">Help: Reservations</a></li>
                     <li><a href="<?= e(help_path('account.php')) ?>">Help: Account</a></li>
-                    <li><a href="<?= e(help_path('updating-content.php')) ?>">Help: Updating Content</a></li>
                     <li><a href="<?= e(asset_prefix()) ?>about.php">About</a></li>
                     <li><a href="<?= e(asset_prefix()) ?>faq.php">FAQ</a></li>
                     <li><a href="<?= e(asset_prefix()) ?>contact.php">Contact</a></li>
@@ -61,6 +60,7 @@ require_once __DIR__ . '/includes/header.php';
                         <li><a href="<?= e(admin_path('dashboard.php')) ?>">Dashboard</a></li>
                         <li><a href="<?= e(admin_path('management/profile.php')) ?>">My Account</a></li>
                         <li><a href="<?= e(admin_path('management/edit_profile.php')) ?>">Edit Profile</a></li>
+                        <li><a href="<?= e(help_path('updating-content.php')) ?>">Help: Updating Content</a></li>
                         <li><a href="<?= e(admin_path('users/list.php')) ?>">Manage Users</a></li>
                         <li><a href="<?= e(admin_path('restaurants/list.php')) ?>">Manage Restaurants</a></li>
                         <li><a href="<?= e(admin_path('restaurants/add.php')) ?>">Add Restaurant</a></li>
