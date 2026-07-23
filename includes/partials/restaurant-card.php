@@ -7,25 +7,37 @@ $viewUrl = ($assetPrefix ?? '') . 'restaurants/view.php?id=' . (int) $restaurant
 ?>
 <!-- Restaurant card partial — used in listing grids -->
 <article class="restaurant-card">
-    <a class="restaurant-card-image" href="<?= e($viewUrl) ?>">
-        <img
-            src="<?= e(restaurant_image_url($restaurant, $assetPrefix ?? '')) ?>"
-            alt="<?= e($restaurant['name']) ?>"
-            <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
-                title="<?= e($restaurant['name']) ?> - Photo by <?= e($restaurant['image_credit']) ?>"
-            <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
-                title="<?= e($restaurant['name']) ?> - Photo source: <?= e($restaurant['image_credit']) ?>"
-            <?php else: ?>
-                title="<?= e($restaurant['name']) ?>"
-            <?php endif; ?>
-            loading="lazy"
-        >
-        <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
-            <span class="image-credit">Photo by <?= e($restaurant['image_credit']) ?></span>
-        <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
-            <span class="image-credit">Photo source: <?= e($restaurant['image_credit']) ?></span>
+    <div class="restaurant-card-image">
+        <a href="<?= e($viewUrl) ?>">
+            <img
+                src="<?= e(restaurant_image_url($restaurant, $assetPrefix ?? '')) ?>"
+                alt="<?= e($restaurant['name']) ?>"
+                <?php if (!empty($restaurant['image_credit'])): ?>
+                    title="<?= e($restaurant['name']) ?> - Photo: <?= e($restaurant['image_credit']) ?>"
+                <?php else: ?>
+                    title="<?= e($restaurant['name']) ?>"
+                <?php endif; ?>
+                loading="lazy"
+            >
+        </a>
+        <!-- If the image credit contains a license URL, we need to parse it and display the author, license (URL to the license), and source -->
+        <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], '<https://')): ?>
+            <?php
+                $licenseUrl = '';
+                if (preg_match('/<([^>]+)>/', $restaurant['image_credit'], $matches)) {
+                    $licenseUrl = $matches[1];
+                }
+                $cleanCredit = preg_split('/<[^>]+>/', $restaurant['image_credit'], 2);
+                $parts = array_map('trim', explode(',', trim($cleanCredit[0]), 2));
+                $author = $parts[0] ?? '';
+                $license = $parts[1] ?? '';
+                $source = trim($cleanCredit[1] ?? '');
+            ?>
+            <span class="image-credit">Photo: <?= e($author) ?>, <a href="<?= e($licenseUrl) ?>" target="_blank" rel="noopener noreferrer"><?= e($license) ?></a><?= e($source) ?></span>
+        <?php elseif (!empty($restaurant['image_credit'])): ?>
+            <span class="image-credit">Photo: <?= e($restaurant['image_credit']) ?></span>
         <?php endif; ?>
-    </a>
+    </div>
     <div class="restaurant-card-body">
         <p class="restaurant-card-meta">
             <span><?= e($restaurant['cuisine']) ?> | <?= e($restaurant['city']) ?>, <?= e($restaurant['province']) ?></span>
