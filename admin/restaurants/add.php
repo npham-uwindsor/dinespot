@@ -23,6 +23,7 @@ $description = '';
 $address = '';
 $image_path = '';
 $price_range = 2;
+$image_credit = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
@@ -33,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = trim($_POST['address'] ?? '');
     $image = $_FILES['image'] ?? null;
     $price_range = (int) ($_POST['price_range'] ?? 2);
+    $image_credit = trim($_POST['image_credit'] ?? '');
 
     if ($name === '' || $cuisine === '' || $city === '' || $province === '' || $description === '') {
         $error = 'Name, cuisine, city, province, and description are required.';
@@ -59,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'image_path' => $image_path,
             'price_range' => $price_range,
             'is_active' => 1,
+            'image_credit' => $image_credit,
         ]);
 
         if ($created) {
@@ -123,6 +126,10 @@ require_once __DIR__ . '/../../includes/header.php';
                     <div class="form-group">
                         <label for="image">Image*</label>
                         <input type="file" id="image" name="image" accept="image/jpeg, image/png, image/jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image_credit">Image Credit</label>
+                        <input type="text" id="image_credit" name="image_credit" value="<?= e($image_credit) ?>">
                     </div>
                     <div class="form-group">
                         <label for="price_range">Price Range*</label>

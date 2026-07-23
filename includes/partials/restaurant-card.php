@@ -11,8 +11,20 @@ $viewUrl = ($assetPrefix ?? '') . 'restaurants/view.php?id=' . (int) $restaurant
         <img
             src="<?= e(restaurant_image_url($restaurant, $assetPrefix ?? '')) ?>"
             alt="<?= e($restaurant['name']) ?>"
+            <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
+                title="<?= e($restaurant['name']) ?> - Photo by <?= e($restaurant['image_credit']) ?>"
+            <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
+                title="<?= e($restaurant['name']) ?> - Photo source: <?= e($restaurant['image_credit']) ?>"
+            <?php else: ?>
+                title="<?= e($restaurant['name']) ?>"
+            <?php endif; ?>
             loading="lazy"
         >
+        <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
+            <span class="image-credit">Photo by <?= e($restaurant['image_credit']) ?></span>
+        <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
+            <span class="image-credit">Photo source: <?= e($restaurant['image_credit']) ?></span>
+        <?php endif; ?>
     </a>
     <div class="restaurant-card-body">
         <p class="restaurant-card-meta">

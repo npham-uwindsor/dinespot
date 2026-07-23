@@ -40,6 +40,7 @@ CREATE TABLE restaurants (
     longitude DECIMAL(10, 7) NULL,
     price_range TINYINT NOT NULL DEFAULT 2,
     is_active TINYINT(1) NOT NULL DEFAULT 1,
+    image_credit VARCHAR(255) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT chk_restaurants_price_range CHECK (price_range BETWEEN 1 AND 4)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -121,27 +122,27 @@ INSERT INTO users (email, password_hash, full_name, role, status, phone) VALUES
 -- RESTAURANTS (20 records)
 -- ============================================================
 
-INSERT INTO restaurants (name, cuisine, city, province, description, address, image_path, latitude, longitude, price_range, is_active) VALUES
-('Au Pied de Cochon', 'French', 'Montreal', 'QC', 'Experience decadent, foie gras-heavy Quebecois-French comfort food.', '536 Avenue Duluth E', 'assets/images/restaurants/french.jpg', 45.5271000, -73.5744000, 4, 1),
-('Sushi Masaki Saito', 'Japanese', 'Toronto', 'ON', 'A highly celebrated 2-Michelin-starred Edomae sushi experience.', '88 Avenue Rd', 'assets/images/restaurants/japan.jpg', 43.6711000, -79.3956000, 4, 1),
-('PAI', 'Thai', 'Toronto', 'ON', 'Authentic Northern Thai street-style food and hospitality.', '18 Duncan St', 'assets/images/restaurants/thai.jpg', 43.6475000, -79.3892000, 2, 1),
-('Restaurant Pearl Morissette', 'Canadian', 'Jordan Station', 'ON', 'Farm-to-table dining featuring French-inspired Canadian dishes.', '3953 Jordan Rd', 'assets/images/restaurants/canada.jpg', 43.1550000, -79.3670000, 4, 1),
-('Buca', 'Italian', 'Toronto', 'ON', 'Known for rustic Italian cooking, cured meats, and authentic seafood.', '604 King St W', 'assets/images/restaurants/italy.jpg', 43.6443000, -79.4011000, 3, 1),
-('Vij''s', 'Modern Indian', 'Vancouver', 'BC', 'Award-winning, inventive, and globally acclaimed Indian cuisine.', '3106 Main St', 'assets/images/restaurants/india.jpg', 49.2557000, -123.1006000, 3, 1),
-('Dasha', 'Chinese', 'Toronto', 'ON', 'High-end contemporary Pan-Asian and Northern Chinese cuisine.', '1229 Dundas St W', 'assets/images/restaurants/china.jpg', 43.6492000, -79.4201000, 3, 1),
-('La Carnita', 'Mexican', 'Toronto', 'ON', 'Vibrant street-style tacos and Mexican street corn.', '106 John St', 'assets/images/restaurants/mexico.jpg', 43.6470000, -79.3925000, 2, 1),
-('Pho 99', 'Vietnamese', 'Toronto', 'ON', 'Praised for authentic, hearty, and comforting bowls of pho.', '1263 Wilson Ave', 'assets/images/restaurants/viet.jpg', 43.7255000, -79.4712000, 1, 1),
-('Messob', 'Ethiopian', 'Toronto', 'ON', 'Traditional family-style Ethiopian dishes served on injera bread.', '265 Danforth Ave', 'assets/images/restaurants/ethiopian.jpg', 43.6780000, -79.3515000, 2, 1),
-('Milos', 'Greek', 'Montreal', 'QC', 'World-class Mediterranean seafood and whole grilled fish.', '5357 Avenue du Parc', 'assets/images/restaurants/greek.jpg', 45.5234000, -73.5998000, 4, 1),
-('Bar Raval', 'Spanish', 'Toronto', 'ON', 'A beautifully designed Gaudi-inspired tapas bar.', '505 College St', 'assets/images/restaurants/spain.jpg', 43.6562000, -79.4098000, 3, 1),
-('JinBar', 'Korean', 'Calgary', 'AB', 'Comfort food with fusion Korean-Canadian flavors like bulgogi pizza.', '1210 1 St SW', 'assets/images/restaurants/korea.jpg', 51.0428000, -114.0719000, 2, 1),
-('Baviloca', 'Brazilian', 'Toronto', 'ON', 'Authentic Brazilian churrascaria and traditional fare.', '883 Queen St W', 'assets/images/restaurants/brazil.jpg', 43.6448000, -79.4105000, 3, 1),
-('Allwyn''s Bakery', 'Caribbean', 'Toronto', 'ON', 'Famous for rich, flavorful jerk chicken and Jamaican patties.', '1610 Eglinton Ave W', 'assets/images/restaurants/carribean.jpg', 43.6978000, -79.4432000, 1, 1),
-('Boustan', 'Lebanese', 'Montreal', 'QC', 'A legendary late-night spot for classic shawarma and falafel.', '2020 Crescent St', 'assets/images/restaurants/lebanon.jpg', 45.4979000, -73.5794000, 1, 1),
-('Kay Pacha', 'Peruvian', 'Toronto', 'ON', 'Upscale, modern take on traditional Peruvian ceviches and anticuchos.', '74 Ossington Ave', 'assets/images/restaurants/peru.jpg', 43.6479000, -79.4197000, 3, 1),
-('The Old Spaghetti Factory', 'German', 'Toronto', 'ON', 'A Canadian staple serving comforting European and Italian-style pasta.', '1 Austin Terrace', 'assets/images/restaurants/germany.jpg', 43.6780000, -79.4094000, 2, 1),
-('Asado', 'Argentine', 'Vancouver', 'BC', 'Traditional Argentine parrillada and wood-fired meats.', '1319 Commercial Dr', 'assets/images/restaurants/argentina.jpg', 49.2734000, -123.0695000, 3, 1),
-('Big Bone BBQ', 'American', 'Windsor', 'ON', 'Southern-style smoked ribs, brisket, and pulled pork.', '2450 Dougall Ave', 'assets/images/restaurants/america.jpg', 42.2956000, -83.0066000, 2, 1);
+INSERT INTO restaurants (name, cuisine, city, province, description, address, image_path, latitude, longitude, price_range, is_active, image_credit) VALUES
+('Au Pied de Cochon', 'French', 'Montreal', 'QC', 'Experience decadent, foie gras-heavy Quebecois-French comfort food.', '536 Avenue Duluth E', 'assets/images/restaurants/french.jpg', 45.5271000, -73.5744000, 4, 1, 'Bob Harvey on Wikimedia Commons'),
+('Sushi Masaki Saito', 'Japanese', 'Toronto', 'ON', 'A highly celebrated 2-Michelin-starred Edomae sushi experience.', '88 Avenue Rd', 'assets/images/restaurants/japan.jpg', 43.6711000, -79.3956000, 4, 1, 'Basile Morin on Wikimedia Commons'),
+('PAI', 'Thai', 'Toronto', 'ON', 'Authentic Northern Thai street-style food and hospitality.', '18 Duncan St', 'assets/images/restaurants/thai.jpg', 43.6475000, -79.3892000, 2, 1, 'Bob Harvey on Wikimedia Commons'),
+('Restaurant Pearl Morissette', 'Canadian', 'Jordan Station', 'ON', 'Farm-to-table dining featuring French-inspired Canadian dishes.', '3953 Jordan Rd', 'assets/images/restaurants/canada.jpg', 43.1550000, -79.3670000, 4, 1, 'Sohail1308 on Wikimedia Commons'),
+('Buca', 'Italian', 'Toronto', 'ON', 'Known for rustic Italian cooking, cured meats, and authentic seafood.', '604 King St W', 'assets/images/restaurants/italy.jpg', 43.6443000, -79.4011000, 3, 1, 'Mike G on Wikimedia Commons'),
+('Vij''s', 'Modern Indian', 'Vancouver', 'BC', 'Award-winning, inventive, and globally acclaimed Indian cuisine.', '3106 Main St', 'assets/images/restaurants/india.jpg', 49.2557000, -123.1006000, 3, 1, 'Konstantin on Wikimedia Commons'),
+('Dasha', 'Chinese', 'Toronto', 'ON', 'High-end contemporary Pan-Asian and Northern Chinese cuisine.', '1229 Dundas St W', 'assets/images/restaurants/china.jpg', 43.6492000, -79.4201000, 3, 1, 'Wikimedia Commons'),
+('La Carnita', 'Mexican', 'Toronto', 'ON', 'Vibrant street-style tacos and Mexican street corn.', '106 John St', 'assets/images/restaurants/mexico.jpg', 43.6470000, -79.3925000, 2, 1, 'Geographer on Wikimedia Commons'),
+('Pho 99', 'Vietnamese', 'Toronto', 'ON', 'Praised for authentic, hearty, and comforting bowls of pho.', '1263 Wilson Ave', 'assets/images/restaurants/viet.jpg', 43.7255000, -79.4712000, 1, 1, 'Fredericknoronha on Wikimedia Commons'),
+('Messob', 'Ethiopian', 'Toronto', 'ON', 'Traditional family-style Ethiopian dishes served on injera bread.', '265 Danforth Ave', 'assets/images/restaurants/ethiopian.jpg', 43.6780000, -79.3515000, 2, 1, 'Sebastian Ballard on Wikimedia Commons'),
+('Milos', 'Greek', 'Montreal', 'QC', 'World-class Mediterranean seafood and whole grilled fish.', '5357 Avenue du Parc', 'assets/images/restaurants/greek.jpg', 45.5234000, -73.5998000, 4, 1, 'Philip Halling on Wikimedia Commons'),
+('Bar Raval', 'Spanish', 'Toronto', 'ON', 'A beautifully designed Gaudi-inspired tapas bar.', '505 College St', 'assets/images/restaurants/spain.jpg', 43.6562000, -79.4098000, 3, 1, 'Ank Kumar on Wikimedia Commons'),
+('JinBar', 'Korean', 'Calgary', 'AB', 'Comfort food with fusion Korean-Canadian flavors like bulgogi pizza.', '1210 1 St SW', 'assets/images/restaurants/korea.jpg', 51.0428000, -114.0719000, 2, 1, 'Syced on Wikimedia Commons'),
+('Baviloca', 'Brazilian', 'Toronto', 'ON', 'Authentic Brazilian churrascaria and traditional fare.', '883 Queen St W', 'assets/images/restaurants/brazil.jpg', 43.6448000, -79.4105000, 3, 1, 'Cayambe on Wikimedia Commons'),
+('Allwyn''s Bakery', 'Caribbean', 'Toronto', 'ON', 'Famous for rich, flavorful jerk chicken and Jamaican patties.', '1610 Eglinton Ave W', 'assets/images/restaurants/carribean.jpg', 43.6978000, -79.4432000, 1, 1, 'Benoît Prieur on Wikimedia Commons'),
+('Boustan', 'Lebanese', 'Montreal', 'QC', 'A legendary late-night spot for classic shawarma and falafel.', '2020 Crescent St', 'assets/images/restaurants/lebanon.jpg', 45.4979000, -73.5794000, 1, 1, 'Benoît Prieur on Wikimedia Commons'),
+('Kay Pacha', 'Peruvian', 'Toronto', 'ON', 'Upscale, modern take on traditional Peruvian ceviches and anticuchos.', '74 Ossington Ave', 'assets/images/restaurants/peru.jpg', 43.6479000, -79.4197000, 3, 1, 'Dietmar Rabich on Wikimedia Commons'),
+('The Old Spaghetti Factory', 'German', 'Toronto', 'ON', 'A Canadian staple serving comforting European and Italian-style pasta.', '1 Austin Terrace', 'assets/images/restaurants/germany.jpg', 43.6780000, -79.4094000, 2, 1, 'Jörg Blobelt on Wikimedia Commons'),
+('Asado', 'Argentine', 'Vancouver', 'BC', 'Traditional Argentine parrillada and wood-fired meats.', '1319 Commercial Dr', 'assets/images/restaurants/argentina.jpg', 49.2734000, -123.0695000, 3, 1, 'Basile Morin on Wikimedia Commons'),
+('Big Bone BBQ', 'American', 'Windsor', 'ON', 'Southern-style smoked ribs, brisket, and pulled pork.', '2450 Dougall Ave', 'assets/images/restaurants/america.jpg', 42.2956000, -83.0066000, 2, 1, 'Wilfredor on Wikimedia Commons');
 
 -- ============================================================
 -- MENU ITEMS (3 per restaurant => 60 records)

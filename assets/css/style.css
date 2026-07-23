@@ -827,8 +827,27 @@ body.modal-open {
 }
 
 .restaurant-card-image {
+    position: relative; /* This ensures the image credit is displayed correctly. */
     display: block;
     text-decoration: none;
+}
+
+.image-credit {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+    z-index: 1; /* This ensures the image credit is displayed on top of the image. */
+    max-width: calc(100% - 1rem);
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
 }
 
 .restaurant-card-body {
@@ -1595,12 +1614,22 @@ body.modal-open {
     align-items: center;
 }
 
+.restaurant-hero-image {
+    position: relative;
+}
+
 .restaurant-hero-image img {
     width: 100%;
     border-radius: var(--radius);
     aspect-ratio: 16 / 10;
     object-fit: cover;
     box-shadow: var(--shadow-md);
+    display: block;
+}
+
+.restaurant-hero-image .image-credit {
+    left: 0.75rem;
+    bottom: 0.75rem;
 }
 
 .restaurant-hero-info h1 {

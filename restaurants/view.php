@@ -98,7 +98,22 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
         <div class="container restaurant-hero-grid">
             <div class="restaurant-hero-image">
-                <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" alt="<?= e($restaurant['name']) ?>">
+                <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" 
+                alt="<?= e($restaurant['name']) ?>" 
+                <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
+                    title="<?= e($restaurant['name']) ?> - Photo by <?= e($restaurant['image_credit']) ?>"
+                <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
+                    title="<?= e($restaurant['name']) ?> - Photo source: <?= e($restaurant['image_credit']) ?>"
+                <?php else: ?>
+                    title="<?= e($restaurant['name']) ?>"
+                <?php endif; ?>
+                >
+                
+                <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
+                    <span class="image-credit">Photo by <?= e($restaurant['image_credit']) ?></span>
+                <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
+                    <span class="image-credit">Photo source: <?= e($restaurant['image_credit']) ?></span>
+                <?php endif; ?>
             </div>
             <div class="restaurant-hero-info">
                 <p class="restaurant-card-meta">
