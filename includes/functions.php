@@ -779,8 +779,8 @@ function create_restaurant(array $data): bool
     require_once __DIR__ . '/db.php';
 
     $stmt = db()->prepare(
-        'INSERT INTO restaurants (name, cuisine, city, province, description, address, image_path, price_range, is_active)
-         VALUES (:name, :cuisine, :city, :province, :description, :address, :image_path, :price_range, :is_active)'
+        'INSERT INTO restaurants (name, cuisine, city, province, description, address, image_path, price_range, is_active, image_credit)
+         VALUES (:name, :cuisine, :city, :province, :description, :address, :image_path, :price_range, :is_active, :image_credit)'
     );
     $stmt->execute([
         'name' => $data['name'],
@@ -792,6 +792,7 @@ function create_restaurant(array $data): bool
         'image_path' => $data['image_path'] !== '' ? $data['image_path'] : null,
         'price_range' => $data['price_range'],
         'is_active' => $data['is_active'] ?? 1,
+        'image_credit' => $data['image_credit'] !== '' ? $data['image_credit'] : null,
     ]);
 
     return $stmt->rowCount() > 0;
@@ -805,7 +806,7 @@ function update_restaurant(int $id, array $data): bool
             'UPDATE restaurants
             SET name = :name, cuisine = :cuisine, city = :city, province = :province,
                 description = :description, address = :address, image_path = :image_path, price_range = :price_range,
-                is_active = :is_active
+                is_active = :is_active, image_credit = :image_credit
             WHERE id = :id'
         );
         $stmt->execute([
@@ -819,6 +820,7 @@ function update_restaurant(int $id, array $data): bool
             'image_path' => $data['image_path'] !== '' ? $data['image_path'] : null,
             'price_range' => $data['price_range'],
             'is_active' => $data['is_active'] ?? 1,
+            'image_credit' => $data['image_credit'] !== '' ? $data['image_credit'] : null,
         ]);
     }
     catch (PDOException $e) {

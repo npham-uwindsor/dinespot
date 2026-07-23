@@ -35,6 +35,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <li>Go to <strong>Manage Restaurants</strong> and click <strong>Add Restaurant</strong>.</li>
                     <li>Fill in name, cuisine, city, province, description, address, and price range.</li>
                     <li>Upload a copyright-free JPG or PNG image (recommended size: at least 800 px wide).</li>
+                    <li>Optionally, attach a credit to the image under the image credit field.</li>
                     <li>Click save. The restaurant appears on the public browse and search pages.</li>
                 </ol>
 

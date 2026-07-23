@@ -38,6 +38,7 @@ $address = $restaurant['address'] ?? '';
 $image_path = $restaurant['image_path'] ?? '';
 $price_range = (int) $restaurant['price_range'];
 $is_active = (int) $restaurant['is_active'];
+$image_credit = $restaurant['image_credit'] ?? '';
 $menuGrouped = get_menu_items_grouped($id);
 $menuItems = [];
 foreach ($menuGrouped as $items) {
@@ -56,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price_range = (int) ($_POST['price_range'] ?? 2);
     $is_active = isset($_POST['is_active']) ? 1 : 0;
     $image_path = $restaurant['image_path'] ?? '';
+    $image_credit = trim($_POST['image_credit'] ?? '');
 
     if ($name === '' || $cuisine === '' || $city === '' || $province === '' || $description === '' || $address === '') {
         $error = 'Name, cuisine, city, province, description, and address are required.';
@@ -83,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'image_path' => $image_path,
                 'price_range' => $price_range,
                 'is_active' => $is_active,
+                'image_credit' => $image_credit,
             ]);
 
             if ($updated) {
@@ -130,6 +133,8 @@ require_once __DIR__ . '/../../includes/header.php';
                         <p class="admin-edit-restaurant-image-name"><?= e(basename($restaurant['image_path'] ?? 'File not found')) ?></p>
                         <label for="image">Upload new image</label>
                         <input type="file" name="image" id="image" accept="image/jpeg, image/png, image/jpg">
+                        <label for="image_credit">Image Credit</label>
+                        <input type="text" id="image_credit" name="image_credit" value="<?= e($image_credit) ?>">
                     </div>
                     <div class="form-group">
                         <label for="name">Name*</label>
