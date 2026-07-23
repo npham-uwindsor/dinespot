@@ -98,21 +98,31 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
         <div class="container restaurant-hero-grid">
             <div class="restaurant-hero-image">
-                <img src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>" 
-                alt="<?= e($restaurant['name']) ?>" 
-                <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
-                    title="<?= e($restaurant['name']) ?> - Photo by <?= e($restaurant['image_credit']) ?>"
-                <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
-                    title="<?= e($restaurant['name']) ?> - Photo source: <?= e($restaurant['image_credit']) ?>"
-                <?php else: ?>
-                    title="<?= e($restaurant['name']) ?>"
-                <?php endif; ?>
+                <img
+                    src="<?= e(restaurant_image_url($restaurant, $assetPrefix)) ?>"
+                    alt="<?= e($restaurant['name']) ?>"
+                    <?php if (!empty($restaurant['image_credit'])): ?>
+                        title="<?= e($restaurant['name']) ?> - Photo: <?= e($restaurant['image_credit']) ?>"
+                    <?php else: ?>
+                        title="<?= e($restaurant['name']) ?>"
+                    <?php endif; ?>
                 >
-                
-                <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], ' on ')): ?>
-                    <span class="image-credit">Photo by <?= e($restaurant['image_credit']) ?></span>
-                <?php elseif (!empty($restaurant['image_credit']) && !str_contains($restaurant['image_credit'], ' on ')): ?>
-                    <span class="image-credit">Photo source: <?= e($restaurant['image_credit']) ?></span>
+                <!-- If the image credit contains a license URL, we need to parse it and display the author, license (URL to the license), and source -->
+                <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], '<https://')): ?>
+                    <?php
+                        $licenseUrl = '';
+                        if (preg_match('/<([^>]+)>/', $restaurant['image_credit'], $matches)) {
+                            $licenseUrl = $matches[1];
+                        }
+                        $cleanCredit = preg_split('/<[^>]+>/', $restaurant['image_credit'], 2);
+                        $parts = array_map('trim', explode(',', trim($cleanCredit[0]), 2));
+                        $author = $parts[0] ?? '';
+                        $license = $parts[1] ?? '';
+                        $source = trim($cleanCredit[1] ?? '');
+                    ?>
+                    <span class="image-credit">Photo: <?= e($author) ?>, <a href="<?= e($licenseUrl) ?>" target="_blank" rel="noopener noreferrer"><?= e($license) ?></a><?= e($source) ?></span>
+                <?php elseif (!empty($restaurant['image_credit'])): ?>
+                    <span class="image-credit">Photo: <?= e($restaurant['image_credit']) ?></span>
                 <?php endif; ?>
             </div>
             <div class="restaurant-hero-info">

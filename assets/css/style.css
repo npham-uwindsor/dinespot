@@ -827,7 +827,11 @@ body.modal-open {
 }
 
 .restaurant-card-image {
-    position: relative; /* This ensures the image credit is displayed correctly. */
+    position: relative;
+    display: block;
+}
+
+.restaurant-card-image > a {
     display: block;
     text-decoration: none;
 }
@@ -836,18 +840,28 @@ body.modal-open {
     position: absolute;
     left: 0.5rem;
     bottom: 0.5rem;
-    z-index: 1; /* This ensures the image credit is displayed on top of the image. */
+    z-index: 1;
     max-width: calc(100% - 1rem);
     padding: 0.2rem 0.45rem;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.55);
     color: #fff;
     font-size: 0.7rem;
-    line-height: 1.2;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    pointer-events: none;
+}
+
+.image-credit a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.image-credit a:hover,
+.image-credit a:focus-visible {
+    color: #dbeafe;
 }
 
 .restaurant-card-body {
