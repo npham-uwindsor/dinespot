@@ -33,6 +33,7 @@ $GLOBALS['assetPrefix'] = $assetPrefix;
     <!-- External fonts & stylesheets (theme CSS loaded dynamically) -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle,logout,manage_accounts " />
+    <!-- The main stylesheet is loaded first, followed by the theme-specific stylesheet. -->
     <link rel="stylesheet" href="<?= e($assetPrefix ?? '') ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= e($assetPrefix ?? '') ?>assets/css/<?= e(theme_stylesheet()) ?>">
     <link rel="icon" type="image/x-icon" href="<?= e($assetPrefix ?? '') ?>assets/images/DineSpot-logo-fav.ico">
@@ -67,9 +68,6 @@ $GLOBALS['assetPrefix'] = $assetPrefix;
                 <a href="<?= e($assetPrefix ?? '') ?>guide.php"<?= is_active_page('guide.php') ? ' aria-current="page"' : '' ?>>Quick Guide</a>
                 <a href="<?= e(context_help_path()) ?>"<?= is_active_page('help') ? ' aria-current="page"' : '' ?>>Help</a>
                 <a href="<?= e($assetPrefix ?? '') ?>contact.php"<?= is_active_page('contact.php') ? ' aria-current="page"' : '' ?>>Contact</a>
-                <?php if (is_logged_in()): ?>
-                    <a href="<?= e($assetPrefix ?? '') ?>charts/index.php"<?= is_active_page('charts') ? ' aria-current="page"' : '' ?>>Insights</a>
-                <?php endif; ?>
                 <?php if (is_client()): ?>
                     <a class="nav-cta nav-cta-outline nav-cta-profile" href="<?= e(client_path('profile.php')) ?>">
                         <span class="material-symbols-outlined" aria-hidden="true">account_circle</span> Profile
