@@ -223,7 +223,7 @@ Default passwords are documented in the SQL file: `admin123` (admin), `client123
 
 ## Public vs private areas
 
-**Public** — home, about, FAQ, contact, restaurant browse/search/view, charts, guide, terms, privacy
+**Public** — home, about, FAQ, contact, restaurant browse/search/view, guide, terms, privacy
 
 **Private (client)** — requires login: profile, edit profile, change password, my reservations, favourites, my reviews, add/edit review, reserve table
 
