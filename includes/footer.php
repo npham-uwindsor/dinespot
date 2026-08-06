@@ -53,7 +53,7 @@
         </div>
     </footer>
 
-    <!-- Global client-side behaviour (nav, FAQ, modals, charts) -->
+    <!-- Global client-side behaviour (nav, FAQ, modals) -->
     <script src="<?= e($assetPrefix ?? '') ?>assets/js/main.js"></script>
 </body>
 </html>

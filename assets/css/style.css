@@ -1794,8 +1794,7 @@ body.modal-open {
   .search-form-grid,
   .client-layout,
   .restaurant-grid-compact,
-  .guide-layout,
-  .charts-grid {
+  .guide-layout {
     grid-template-columns: 1fr;
   }
 
