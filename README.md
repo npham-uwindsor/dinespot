@@ -73,6 +73,8 @@ Sample login accounts:
 
 All clients password is `client123`.
 
+An account `jordan.lee@example.com` is suspended in the sample data.
+
 ---
 
 ## Front-end documentation
@@ -81,7 +83,7 @@ All clients password is `client123`.
 
 - **HTML5** — semantic markup (`header`, `nav`, `main`, `section`, `footer`)
 - **CSS** — custom styles in `assets/css/style.css`, plus 3 theme files
-- **JavaScript** — vanilla JS in `assets/js/main.js` (no framework)
+- **JavaScript** — JavaScript in `assets/js/main.js` (no framework)
 - **PHP + MySQL** — server-side pages and database queries
 
 ### Themes
@@ -107,7 +109,6 @@ The layout uses a mobile-first approach with breakpoints around **768px** (mobil
 | Audio help | Help pages (`help/browsing.php`, `help/account.php`, `help/reservations.php`, `help/updating-content.php`) |
 | Interactive map | Restaurant detail page — Leaflet + OpenStreetMap |
 | Tabbed menus | Restaurant detail — categories switch with JS |
-| Charts | `charts/index.php` — Chart.js bar + pie charts |
 
 ### SEO
 
@@ -125,7 +126,6 @@ Handles:
 - Meal cost estimator on restaurant detail page
 - Reservation estimate on reservation page
 - Confirm dialogs before cancel/delete actions
-- Chart.js rendering on the insights page
 
 ---
 

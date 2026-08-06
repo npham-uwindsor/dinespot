@@ -50,7 +50,6 @@ require_once __DIR__ . '/includes/header.php';
                     <li><a href="<?= e(client_path('reservations.php')) ?>">My Reservations</a></li>
                     <li><a href="<?= e(client_path('favourites.php')) ?>">My Favourites</a></li>
                     <li><a href="<?= e(client_path('my_reviews.php')) ?>">My Reviews</a></li>
-                    <li><a href="<?= e(asset_prefix()) ?>charts/index.php">Insights</a></li>
                 </ul>
             </div>
             <?php if (is_admin()): ?>
@@ -66,7 +65,6 @@ require_once __DIR__ . '/includes/header.php';
                         <li><a href="<?= e(admin_path('restaurants/add.php')) ?>">Add Restaurant</a></li>
                         <li><a href="<?= e(admin_path('reservations/list.php')) ?>">Manage Reservations</a></li>
                         <li><a href="<?= e(admin_path('reviews/list.php')) ?>">Manage Reviews</a></li>
-                        <li><a href="<?= e(asset_prefix()) ?>charts/index.php">Insights</a></li>
                         <li><a href="<?= e(admin_path('theme/settings.php')) ?>">Theme Settings</a></li>
                         <li><a href="<?= e(asset_prefix()) ?>monitor.php">System Monitoring</a></li>
                     </ul>

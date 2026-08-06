@@ -42,10 +42,12 @@ require_once __DIR__ . '/../includes/header.php';
                         <a href="account.php"><strong>Your Account</strong></a>
                         <span>Register, sign in, manage favourites, and write reviews.</span>
                     </li>
-                    <li>
-                        <a href="updating-content.php"><strong>Updating Content</strong></a>
-                        <span>Add restaurants, upload images, change themes, and refresh media files.</span>
-                    </li>
+                    <?php if (is_admin()): ?>
+                        <li>
+                            <a href="updating-content.php"><strong>Updating Content (Admin Only)</strong></a>
+                            <span>Add restaurants, upload images, change themes, and refresh media files.</span>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
                 <p style="margin-top: 1.5rem;">New to the site? Try the interactive <a href="<?= e(asset_prefix()) ?>guide.php">step-by-step guide</a> or read the <a href="<?= e(asset_prefix()) ?>faq.php">FAQ</a>.</p>

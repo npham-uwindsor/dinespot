@@ -256,6 +256,6 @@ INSERT INTO favourites (user_id, restaurant_id) VALUES
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('active_theme', 'classic'),
-('site_version', '2.0.0');
+('site_version', '3.0.0');
 
 SET FOREIGN_KEY_CHECKS = 1;
