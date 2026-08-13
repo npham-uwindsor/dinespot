@@ -73,6 +73,8 @@ Sample login accounts:
 
 All clients password is `client123`.
 
+An account `jordan.lee@example.com` is suspended in the sample data.
+
 ---
 
 ## Front-end documentation
