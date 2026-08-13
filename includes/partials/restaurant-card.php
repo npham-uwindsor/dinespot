@@ -21,7 +21,7 @@ $viewUrl = ($assetPrefix ?? '') . 'restaurants/view.php?id=' . (int) $restaurant
             >
         </a>
         <!-- If the image credit contains a license URL, we need to parse it and display the author, license (URL to the license), and source -->
-        <?php if (!empty($restaurant['image_credit']) && (str_contains($restaurant['image_credit'], '<https://') || str_contains($restaurant['image_credit'], '<http://'))): ?>
+        <?php if (!empty($restaurant['image_credit']) && str_contains($restaurant['image_credit'], '<https://')): ?>
             <?php
                 $licenseUrl = '';
                 if (preg_match('/<([^>]+)>/', $restaurant['image_credit'], $matches)) {

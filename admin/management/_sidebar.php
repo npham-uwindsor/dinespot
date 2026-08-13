@@ -11,6 +11,7 @@ $adminNavItems = [
     ['id' => 'restaurants', 'href' => admin_path('restaurants/list.php'), 'label' => 'Manage Restaurants'],
     ['id' => 'reservations', 'href' => admin_path('reservations/list.php'), 'label' => 'Manage Reservations'],
     ['id' => 'reviews', 'href' => admin_path('reviews/list.php'), 'label' => 'Manage Reviews'],
+    ['id' => 'charts', 'href' => e($assetPrefix ?? '../') . 'charts/index.php', 'label' => 'Insights'],
     ['id' => 'theme', 'href' => admin_path('theme/settings.php'), 'label' => 'Theme Settings'],
     ['id' => 'monitor', 'href' => asset_prefix() . 'monitor.php', 'label' => 'System Monitoring'],
 ];

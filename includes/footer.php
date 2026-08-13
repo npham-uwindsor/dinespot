@@ -19,6 +19,9 @@
                     <li><a href="<?= e($assetPrefix ?? '') ?>restaurants/search.php">Search</a></li>
                     <li><a href="<?= e($assetPrefix ?? '') ?>guide.php">Quick Guide</a></li>
                     <li><a href="<?= e(help_path()) ?>">Help Wiki</a></li>
+                    <?php if (is_logged_in()): ?>
+                        <li><a href="<?= e($assetPrefix ?? '') ?>charts/index.php">Insights</a></li>
+                    <?php endif; ?>
                     <?php if (!is_logged_in()): ?>
                         <li><a href="<?= e(client_path('register.php')) ?>">Create Account</a></li>
                     <?php endif; ?>
@@ -53,7 +56,7 @@
         </div>
     </footer>
 
-    <!-- Global client-side behaviour (nav, FAQ, modals) -->
+    <!-- Global client-side behaviour (nav, FAQ, modals, charts) -->
     <script src="<?= e($assetPrefix ?? '') ?>assets/js/main.js"></script>
 </body>
 </html>

@@ -341,6 +341,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Chart.js visualisations on the Insights page (data injected via window.dineSpotCharts)
+    if (window.dineSpotCharts && typeof Chart !== 'undefined') {
+        var cuisineCanvas = document.getElementById('cuisine-chart');
+        var reservationCanvas = document.getElementById('reservation-chart');
+
+        if (cuisineCanvas) {
+            new Chart(cuisineCanvas, {
+                type: 'bar',
+                data: {
+                    labels: window.dineSpotCharts.cuisines.labels,
+                    datasets: [{
+                        label: 'Restaurants',
+                        data: window.dineSpotCharts.cuisines.values,
+                        backgroundColor: '#8b2942'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                }
+            });
+        }
+
+        if (reservationCanvas) {
+            new Chart(reservationCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: window.dineSpotCharts.reservations.labels,
+                    datasets: [{
+                        data: window.dineSpotCharts.reservations.values,
+                        backgroundColor: ['#8b2942', '#c9a962', '#2d6a4f', '#9b2226', '#5c534c']
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    }
+
     // Handle forgot password
     var forgotPassword = document.querySelector('.forgot-password');
     var forgotPasswordMessage = document.querySelector('.forgot-password-message');
