@@ -196,6 +196,7 @@ function monitor_collect_services(): array
         'Site Logo' => 'assets/images/DineSpot-logo.jpg',
         'Restaurant Images' => 'assets/images/restaurants/french.jpg',
         'Leaflet Stylesheet' => 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+        'Chart.js CDN' => 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
         'OpenStreetMap Tiles' => 'https://tile.openstreetmap.org/0/0/0.png',
     ];
 

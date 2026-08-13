@@ -134,6 +134,10 @@ function is_active_page(string $page): bool
         return str_contains($script, '/restaurants/');
     }
 
+    if ($page === 'charts') {
+        return str_contains($script, '/charts/');
+    }
+
     if ($page === 'help') {
         return str_contains($script, '/help/');
     }

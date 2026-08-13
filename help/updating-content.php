@@ -12,8 +12,6 @@ $pageDescription = 'Instructions for admins on adding restaurants, images, theme
 $bodyClass = 'page-help';
 
 require_once __DIR__ . '/../includes/header.php';
-
-require_admin();
 ?>
 
 <section class="page-hero">

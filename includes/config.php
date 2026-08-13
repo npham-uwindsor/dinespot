@@ -29,7 +29,7 @@ else {
 define('SITE_NAME', 'DineSpot');
 define('SITE_TAGLINE', 'Discover, review, and reserve restaurants across Canada');
 define('SITE_EMAIL', 'hello@dinespot.ca');
-define('SITE_PHONE', '(519) 555-0142');
+define('SITE_PHONE', '(123) 456-7890');
 define('SITE_ADDRESS', '401 Sunset Avenue, Windsor, ON N9B 3P4');
 define('SITE_SUPPORT_HOURS', '9:00 AM - 7:00 PM (EST)');
 define('SITE_SUPPORT_EMAIL', 'support@dinespot.ca');

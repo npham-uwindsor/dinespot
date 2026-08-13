@@ -84,6 +84,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <a class="btn btn-secondary" href="<?= e(admin_path('reservations/list.php')) ?>">Manage Reservations</a>
                         <a class="btn btn-secondary" href="<?= e(admin_path('reviews/list.php')) ?>">Manage Reviews</a>
                         <a class="btn btn-secondary" href="<?= e(admin_path('theme/settings.php')) ?>">Theme Settings</a>
+                        <a class="btn btn-secondary" href="<?= e($assetPrefix) ?>charts/index.php">View Insights</a>
                         <a class="btn btn-secondary" href="<?= e($assetPrefix) ?>monitor.php">System Monitoring</a>
                     </div>
                 </div>
