@@ -11,7 +11,7 @@ DineSpot is a restaurant discovery website where users can browse Canadian resta
 
 ---
 
-## What you need to install
+## What you need to install on your local
 
 - PHP 8.0 or newer (with PDO MySQL extension)
 - MySQL or MariaDB
