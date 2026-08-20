@@ -11,7 +11,7 @@ DineSpot is a restaurant discovery website where users can browse Canadian resta
 
 Primary: https://pham39.myweb.cs.uwindsor.ca/dinespot
 
-Alternative: http://dinespot.getenjoyment.net
+Alternative: [http://dinespot.getenjoyment.net](http://dinespot.getenjoyment.net/index.php)
 
 ---
 
